@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Diagnosis - Tricholens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body style="background-color: #FFF0F5;">
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; font-weight: 600;">Analyzing Scalp...</p>
+        <p style="font-size: 12px; color: gray;">This may take a few seconds</p>
+    </div>
+
+    <div class="sidebar-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo" style="height: 32px;" onerror="this.style.display='none'">
+                <h3 style="margin: 0; color: white;">Tricholens</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="diagnosis.html" class="sidebar-link active">
+                    <i class="fas fa-plus-circle"></i> New Diagnosis
+                </a>
+                <a href="history.html" class="sidebar-link">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="haircare.html" class="sidebar-link">
+                    <i class="fas fa-leaf"></i> Care Hub
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 20px;">
+                <button onclick="localStorage.clear(); navigate('login.html')" class="sidebar-link"
+                    style="background: none; border: none; width: 100%; cursor: pointer; text-align: left;">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1 style="font-size: 28px; margin-bottom: 4px;">New Analysis</h1>
+                    <p style="color: #6B7280;">Run a comprehensive AI analysis of your scalp health.</p>
+                </div>
+            </header>
+
+            <form id="diagnosis-form">
+                <div class="form-grid">
+                    <div>
+                        <div class="card card-20" style="margin: 0; height: 100%;">
+                            <p
+                                style="font-size: 13px; font-weight: 700; color: var(--brand-pink-dark); margin-bottom: 20px;">
+                                PATIENT INFORMATION</p>
+
+                            <div class="input-group">
+                                <label class="label">Patient Name</label>
+                                <div class="input-container" style="background: #fdfdfd;">
+                                    <input type="text" id="patient-name" placeholder="Full Name" required>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 16px;">
+                                <div class="input-group" style="flex: 0 0 100px;">
+                                    <label class="label">Age</label>
+                                    <div class="input-container" style="background: #fdfdfd;">
+                                        <input type="number" id="age" placeholder="Ex: 25" required>
+                                    </div>
+                                </div>
+
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="input-container" style="background: #fdfdfd;">
+                                        <select id="gender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" id="family-history"
+                                        style="width: 20px; height: 20px; accent-color: var(--brand-pink);">
+                                    <span style="font-size: 14px; font-weight: 600;">Family History of AGA?</span>
+                                </label>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="label">Duration of hair loss</label>
+                                <div class="input-container" style="background: #fdfdfd;">
+                                    <input type="text" id="duration" placeholder="Ex: 6 months" required>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="label">Treatment History</label>
+                                <div class="input-container" style="background: #fdfdfd;">
+                                    <input type="text" id="treatment" placeholder="Ex: Minoxidil 5%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card card-20" style="margin: 0; margin-bottom: 24px;">
+                            <p style="font-size: 13px; font-weight: 700; color: gray; margin-bottom: 12px;">SCALP IMAGE
+                            </p>
+                            <div class="upload-area" onclick="document.getElementById('image-input').click()">
+                                <input type="file" id="image-input" accept="image/*" style="display: none;" required>
+                                <div id="upload-placeholder" class="upload-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <p>SELECT IMAGE</p>
+                                </div>
+                                <img id="image-preview" src="" alt="Preview">
+                            </div>
+
+                            <div class="card card-20" style="margin: 0;">
+                                <p
+                                    style="font-size: 13px; font-weight: 700; color: var(--brand-pink-dark); margin-bottom: 12px;">
+                                    DOCTOR'S COMMENTS</p>
+                                <textarea id="comments"
+                                    style="width: 100%; min-height: 100px; border: 1px solid var(--border-bright); border-radius: 14px; padding: 14px; outline: none; font-size: 14px; font-family: inherit;"
+                                    placeholder="Enter clinical notes, recommendations..."></textarea>
+                            </div>
+
+                            <div style="margin-top: 24px;">
+                                <button type="submit" id="diagnose-btn" class="primary-button">DIAGNOSE NOW</button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
