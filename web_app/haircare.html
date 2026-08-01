@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Care Hub - Tricholens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hub-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .hub-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+        .hub-icon-badge {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #fff;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hub-icon-badge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
+            pointer-events: none;
+        }
+        .hub-icon-badge.tips    { background: linear-gradient(135deg, #FF6B6B, #FF3E8A); }
+        .hub-icon-badge.about   { background: linear-gradient(135deg, #10B981, #059669); }
+        .hub-icon-badge.privacy { background: linear-gradient(135deg, #6366F1, #3B82F6); }
+        .hub-card-text h3 { margin: 0 0 4px 0; font-size: 18px; font-weight: 700; color: #1F2937; }
+        .hub-card-text p  { margin: 0; font-size: 14px; color: #6B7280; line-height: 1.4; }
+        .hub-card-arrow { margin-left: auto; color: #D1D5DB; font-size: 18px; transition: color 0.2s, transform 0.2s; }
+        .hub-card:hover .hub-card-arrow { color: var(--brand-pink); transform: translateX(4px); }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo" style="height: 32px;" onerror="this.style.display='none'">
+                <h3 style="margin: 0; color: white;">Tricholens</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="diagnosis.html" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i> New Diagnosis
+                </a>
+                <a href="history.html" class="sidebar-link">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="haircare.html" class="sidebar-link active">
+                    <i class="fas fa-leaf"></i> Care Hub
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 20px;">
+                <button onclick="localStorage.clear(); navigate('login.html')" class="sidebar-link"
+                    style="background: none; border: none; width: 100%; cursor: pointer; text-align: left;">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <div class="care-hub-header-badge">
+                        <img src="care_hub_logo.png" style="width: 28px; height: 28px; object-fit: contain;" alt="Care Hub Logo">
+                        <span>Tricholens Official Care Hub</span>
+                    </div>
+                    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin-bottom: 6px; display: flex; align-items: center; gap: 12px;">
+                        Care Hub Center
+                    </h1>
+                    <p style="color: #6B7280; font-size: 15px;">Your comprehensive resource for hair health tips, mission info, and legal policies.</p>
+                </div>
+            </header>
+
+
+            <div class="dashboard-grid">
+                <!-- Daily Hair Tips -->
+                <div class="hub-card" onclick="navigate('tips.html')">
+                    <div class="hub-icon-badge tips">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="hub-card-text">
+                        <h3>✨ Daily Hair Tips</h3>
+                        <p>Expert advice for healthy hair growth & scalp care</p>
+                    </div>
+                    <i class="fas fa-chevron-right hub-card-arrow"></i>
+                </div>
+
+                <!-- About Mission -->
+                <div class="hub-card" onclick="navigate('about.html')">
+                    <div class="hub-icon-badge about">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="hub-card-text">
+                        <h3>🎯 About Mission</h3>
+                        <p>Understanding the Tricholens vision & purpose</p>
+                    </div>
+                    <i class="fas fa-chevron-right hub-card-arrow"></i>
+                </div>
+
+                <!-- Privacy Policy -->
+                <div class="hub-card" onclick="navigate('privacy.html')">
+                    <div class="hub-icon-badge privacy">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="hub-card-text">
+                        <h3>🔒 Privacy & Policy</h3>
+                        <p>How we protect your data & ensure privacy</p>
+                    </div>
+                    <i class="fas fa-chevron-right hub-card-arrow"></i>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
