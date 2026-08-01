@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Tricholens</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF5F5 100%);
+            padding: 40px;
+        }
+        
+        .splash-logo {
+            width: 280px;
+            height: auto;
+            margin-bottom: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        h1.brand-title {
+            font-size: 40px;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="premium-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+
+        <div class="splash-container">
+            <img src="logo.png" alt="Logo" class="splash-logo" onerror="this.src='/path/to/placeholder_logo.png'">
+            <h1 class="brand-title">TRICHOLENS</h1>
+            
+            <button class="primary-button" style="width: 200px;" onclick="handleStart()">Start</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function handleStart() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                window.location.href = 'dashboard.html';
+            } else {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
