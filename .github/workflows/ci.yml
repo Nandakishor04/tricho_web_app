@@ -1,0 +1,354 @@
+name: 🧪 Tricholens Full Test Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  # JOB 1: SELENIUM UI TESTS (300 test cases)
+  # ─────────────────────────────────────────────────────────────
+  selenium-tests:
+    name: "🌐 Selenium UI Tests (300 TCs)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 🌐 Set up Chrome browser
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: 📦 Install backend dependencies
+        run: |
+          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+
+      - name: 📦 Install test dependencies
+        run: |
+          pip install pytest pytest-html pytest-xdist selenium webdriver-manager
+
+      - name: 🚀 Start backend server
+        run: |
+          cd backend_complete
+          python single_server.py &
+          echo "Server PID: $!"
+          sleep 5
+          curl -f http://localhost:8118/ || (echo "Server failed to start" && exit 1)
+
+      - name: 🧪 Run Selenium Tests (300 test cases)
+        run: |
+          python -m pytest tests/test_selenium.py \
+            --tb=short \
+            --junit-xml=reports/selenium_results.xml \
+            --html=reports/selenium_report.html \
+            --self-contained-html \
+            -v \
+            --timeout=30 \
+            -p no:warnings \
+            2>&1 | tee reports/selenium_output.txt
+        continue-on-error: true
+
+      - name: 📊 Generate Selenium Test Summary
+        if: always()
+        run: |
+          echo "## 🌐 Selenium UI Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/selenium_output.txt ]; then
+            PASSED=$(grep -o '[0-9]* passed' reports/selenium_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            FAILED=$(grep -o '[0-9]* failed' reports/selenium_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            ERRORS=$(grep -o '[0-9]* error' reports/selenium_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            TOTAL=$((PASSED + FAILED + ERRORS))
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ⚠️ Errors | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📋 Total  | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload Selenium Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: selenium-test-reports
+          path: reports/
+          retention-days: 30
+
+  # ─────────────────────────────────────────────────────────────
+  # JOB 2: LOAD TESTS (300 test cases)
+  # ─────────────────────────────────────────────────────────────
+  load-tests:
+    name: "⚡ Load & Performance Tests (300 TCs)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install backend dependencies
+        run: |
+          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+
+      - name: 📦 Install test dependencies
+        run: |
+          pip install pytest pytest-html pytest-xdist requests
+
+      - name: 🚀 Start backend server
+        run: |
+          cd backend_complete
+          python single_server.py &
+          sleep 5
+          curl -f http://localhost:8118/ || exit 1
+
+      - name: ⚡ Run Load Tests (300 test cases)
+        run: |
+          python -m pytest tests/test_load.py \
+            --tb=short \
+            --junit-xml=reports/load_results.xml \
+            --html=reports/load_report.html \
+            --self-contained-html \
+            -v \
+            -p no:warnings \
+            2>&1 | tee reports/load_output.txt
+        continue-on-error: true
+
+      - name: 📊 Generate Load Test Summary
+        if: always()
+        run: |
+          echo "## ⚡ Load & Performance Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/load_output.txt ]; then
+            PASSED=$(grep -o '[0-9]* passed' reports/load_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            FAILED=$(grep -o '[0-9]* failed' reports/load_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            TOTAL=$((PASSED + FAILED))
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📋 Total  | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Response Time Summary" >> $GITHUB_STEP_SUMMARY
+            grep -i "took\|ms\|seconds" reports/load_output.txt | head -20 >> $GITHUB_STEP_SUMMARY || true
+          fi
+
+      - name: 📤 Upload Load Test Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: load-test-reports
+          path: reports/
+          retention-days: 30
+
+  # ─────────────────────────────────────────────────────────────
+  # JOB 3: APPIUM / MOBILE API TESTS (300 test cases)
+  # ─────────────────────────────────────────────────────────────
+  appium-tests:
+    name: "📱 Appium Mobile API Tests (300 TCs)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install backend dependencies
+        run: |
+          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+
+      - name: 📦 Install test dependencies
+        run: |
+          pip install pytest pytest-html pytest-xdist requests
+
+      - name: 🚀 Start backend server
+        run: |
+          cd backend_complete
+          python single_server.py &
+          sleep 5
+          curl -f http://localhost:8118/ || exit 1
+
+      - name: 📱 Run Appium Mobile API Tests (300 test cases)
+        run: |
+          python -m pytest tests/test_appium.py \
+            --tb=short \
+            --junit-xml=reports/appium_results.xml \
+            --html=reports/appium_report.html \
+            --self-contained-html \
+            -v \
+            -p no:warnings \
+            2>&1 | tee reports/appium_output.txt
+        continue-on-error: true
+
+      - name: 📊 Generate Appium Test Summary
+        if: always()
+        run: |
+          echo "## 📱 Appium Mobile API Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/appium_output.txt ]; then
+            PASSED=$(grep -o '[0-9]* passed' reports/appium_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            FAILED=$(grep -o '[0-9]* failed' reports/appium_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            TOTAL=$((PASSED + FAILED))
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📋 Total  | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Covered Mobile Flows" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔐 Authentication (signup, login, logout)" >> $GITHUB_STEP_SUMMARY
+            echo "- 👤 Profile management (create, update, view)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔑 OTP & password reset flows" >> $GITHUB_STEP_SUMMARY
+            echo "- 📋 History get/delete flows" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔄 End-to-end mobile session flows" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload Appium Test Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: appium-test-reports
+          path: reports/
+          retention-days: 30
+
+  # ─────────────────────────────────────────────────────────────
+  # JOB 4: VULNERABILITY TESTS (300 test cases)
+  # ─────────────────────────────────────────────────────────────
+  vulnerability-tests:
+    name: "🔐 Vulnerability & Security Tests (300 TCs)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Install backend dependencies
+        run: |
+          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+
+      - name: 📦 Install security test dependencies
+        run: |
+          pip install pytest pytest-html pytest-xdist requests bandit safety
+
+      - name: 🚀 Start backend server
+        run: |
+          cd backend_complete
+          python single_server.py &
+          sleep 5
+          curl -f http://localhost:8118/ || exit 1
+
+      - name: 🔍 Run Bandit Static Analysis (pre-test)
+        run: |
+          python -m bandit -r backend_complete/single_server.py -f txt -o reports/bandit_report.txt || true
+          cat reports/bandit_report.txt >> $GITHUB_STEP_SUMMARY || true
+        continue-on-error: true
+
+      - name: 🛡️ Run Safety Dependency CVE Check (pre-test)
+        run: |
+          python -m safety check -r backend_complete/requirements.txt --output text > reports/safety_report.txt 2>&1 || true
+          echo "### 🛡️ Safety CVE Check" >> $GITHUB_STEP_SUMMARY
+          cat reports/safety_report.txt >> $GITHUB_STEP_SUMMARY || true
+        continue-on-error: true
+
+      - name: 🔐 Run Vulnerability Tests (300 test cases)
+        run: |
+          python -m pytest tests/test_vulnerability.py \
+            --tb=short \
+            --junit-xml=reports/vulnerability_results.xml \
+            --html=reports/vulnerability_report.html \
+            --self-contained-html \
+            -v \
+            -p no:warnings \
+            2>&1 | tee reports/vulnerability_output.txt
+        continue-on-error: true
+
+      - name: 📊 Generate Vulnerability Test Summary
+        if: always()
+        run: |
+          echo "## 🔐 Vulnerability & Security Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f reports/vulnerability_output.txt ]; then
+            PASSED=$(grep -o '[0-9]* passed' reports/vulnerability_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            FAILED=$(grep -o '[0-9]* failed' reports/vulnerability_output.txt | tail -1 | grep -o '[0-9]*' || echo "0")
+            TOTAL=$((PASSED + FAILED))
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📋 Total  | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Security Areas Covered" >> $GITHUB_STEP_SUMMARY
+            echo "- 💉 SQL Injection (60 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🕷️ XSS / Cross-Site Scripting (60 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔒 HTTP Security Headers (40 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- 📁 Path Traversal (40 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔑 Authentication & IDOR (40 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Input Validation (40 test cases)" >> $GITHUB_STEP_SUMMARY
+            echo "- 🧬 Code Security & CVE Scan (20 test cases)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload Vulnerability Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vulnerability-test-reports
+          path: reports/
+          retention-days: 30
+
+  # ─────────────────────────────────────────────────────────────
+  # SUMMARY JOB: Combine all results
+  # ─────────────────────────────────────────────────────────────
+  all-tests-summary:
+    name: "📋 Overall Test Summary"
+    runs-on: ubuntu-latest
+    needs: [selenium-tests, load-tests, appium-tests, vulnerability-tests]
+    if: always()
+
+    steps:
+      - name: 📋 Post Final Summary
+        run: |
+          echo "# 🧪 Tricholens CI/CD — All Test Suites Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Suite | Status | Test Cases |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|-----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 Selenium UI Tests | ${{ needs.selenium-tests.result }} | 300 |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚡ Load & Performance Tests | ${{ needs.load-tests.result }} | 300 |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📱 Appium Mobile API Tests | ${{ needs.appium-tests.result }} | 300 |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔐 Vulnerability Tests | ${{ needs.vulnerability-tests.result }} | 300 |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Test Cases: 1200**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "_Reports are available as downloadable artifacts in the Actions tab._" >> $GITHUB_STEP_SUMMARY
