@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Tricholens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { background: #0F172A; }
+        .sidebar-logo { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .sidebar-link { border-radius: 10px; margin: 2px 12px; padding: 11px 14px; font-size: 14px; font-weight: 500; }
+        .sidebar-link i { width: 20px; text-align: center; }
+        .sidebar-link:hover { background: rgba(255,255,255,0.07); color: #F9FAFB; }
+        .sidebar-link.active { background: linear-gradient(135deg, rgba(255,112,112,0.2), rgba(255,90,90,0.1)); color: #FF7070; border-left: 3px solid #FF7070; padding-left: 11px; }
+        .signout-btn { border-radius: 10px; margin: 2px 12px; padding: 11px 14px; font-size: 14px; color: #9CA3AF; display: flex; align-items: center; gap: 12px; background: none; border: none; width: calc(100% - 24px); cursor: pointer; transition: all 0.2s; }
+        .signout-btn:hover { background: rgba(239,68,68,0.1); color: #EF4444; }
+
+        .main-content { background: #F1F5F9; min-height: 100vh; }
+        .page-header { background: white; border-bottom: 1px solid #E5E7EB; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .page-header h1 { font-size: 22px; font-weight: 800; color: #0F172A; margin: 0; }
+        .page-header p { font-size: 13px; color: #6B7280; margin: 2px 0 0; }
+
+        /* Profile Grid */
+        .profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 24px; padding: 28px 32px 40px; }
+
+        /* Left: Avatar Card */
+        .avatar-card { background: white; border-radius: 20px; border: 1px solid #E5E7EB; overflow: hidden; height: fit-content; }
+        .avatar-banner { background: linear-gradient(135deg, #FF7070 0%, #FF5A5A 100%); height: 90px; position: relative; }
+        .avatar-circle { width: 80px; height: 80px; background: white; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 16px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; font-size: 32px; color: #FF5A5A; position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); }
+        .avatar-body { padding: 52px 24px 28px; text-align: center; }
+        .avatar-body h2 { font-size: 20px; font-weight: 800; color: #0F172A; margin: 0 0 4px; }
+        .avatar-body .email-tag { font-size: 13px; color: #9CA3AF; }
+        .edit-profile-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 20px; background: linear-gradient(135deg, #FF7070, #FF5A5A); color: white; border: none; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .edit-profile-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .sign-out-btn-card { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 10px; background: none; color: #EF4444; border: 1.5px solid #FCA5A5; border-radius: 12px; padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .sign-out-btn-card:hover { background: #FEF2F2; }
+
+        /* Right: Details Card */
+        .details-card { background: white; border-radius: 20px; border: 1px solid #E5E7EB; overflow: hidden; height: fit-content; }
+        .details-card-header { padding: 20px 24px; border-bottom: 1px solid #F3F4F6; }
+        .details-card-header h2 { font-size: 16px; font-weight: 700; color: #0F172A; margin: 0; }
+        .detail-row { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-bottom: 1px solid #F8FAFC; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+        .detail-row .label-small { font-size: 11px; color: #9CA3AF; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+        .detail-row .value { font-size: 15px; font-weight: 600; color: #0F172A; display: block; margin-top: 2px; }
+
+        /* Stats inside profile */
+        .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid #F3F4F6; }
+        .profile-stat-item { padding: 18px; text-align: center; border-right: 1px solid #F3F4F6; }
+        .profile-stat-item:last-child { border-right: none; }
+        .profile-stat-value { font-size: 22px; font-weight: 800; color: #0F172A; }
+        .profile-stat-label { font-size: 11px; color: #9CA3AF; margin-top: 3px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="sidebar-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo" style="height: 30px;" onerror="this.style.display='none'">
+                <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 700;">Tricholens</h3>
+            </div>
+            <nav class="sidebar-nav" style="padding: 12px 0;">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="diagnosis.html" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i> New Diagnosis
+                </a>
+                <a href="history.html" class="sidebar-link">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="haircare.html" class="sidebar-link">
+                    <i class="fas fa-leaf"></i> Care Hub
+                </a>
+                <a href="profile.html" class="sidebar-link active">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 12px 0 20px;">
+                <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 0 12px 12px;"></div>
+                <button class="signout-btn" onclick="localStorage.clear(); navigate('login.html')">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>My Profile</h1>
+                    <p>Manage your personal information and account settings.</p>
+                </div>
+                <button class="edit-button" onclick="navigate('edit_profile.html')">
+                    <i class="fas fa-pencil-alt" style="margin-right: 6px;"></i> Edit Profile
+                </button>
+            </div>
+
+            <div class="profile-grid">
+                <!-- Avatar & Quick Actions -->
+                <div>
+                    <div class="avatar-card">
+                        <div class="avatar-banner">
+                            <div class="avatar-circle"><i class="fas fa-user"></i></div>
+                        </div>
+                        <div class="avatar-body">
+                            <h2 id="profile-name">User Name</h2>
+                            <span id="profile-email" class="email-tag">email@example.com</span>
+
+                            <div class="profile-stats" style="margin-top: 20px;">
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-value" id="stat-diagnoses">--</div>
+                                    <div class="profile-stat-label">Diagnoses</div>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-value" id="stat-age">--</div>
+                                    <div class="profile-stat-label">Age</div>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-value" id="stat-gender-icon">--</div>
+                                    <div class="profile-stat-label">Gender</div>
+                                </div>
+                            </div>
+
+                            <button class="edit-profile-btn" onclick="navigate('edit_profile.html')">
+                                <i class="fas fa-user-edit"></i> Edit Profile
+                            </button>
+                            <button id="signout-btn" class="sign-out-btn-card">
+                                <i class="fas fa-sign-out-alt"></i> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div>
+                    <div class="details-card">
+                        <div class="details-card-header">
+                            <h2><i class="fas fa-id-card" style="color:#FF7070; margin-right:8px;"></i>Personal Information</h2>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon" style="background:#FFF0F0; color:#FF5A5A;">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="label-small">Mobile Number</span>
+                                <span id="val-mobile" class="value">--</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon" style="background:#EFF6FF; color:#3B82F6;">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div>
+                                <span class="label-small">Date of Birth</span>
+                                <span id="val-dob" class="value">--</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon" style="background:#F0FDF4; color:#22C55E;">
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                            <div>
+                                <span class="label-small">Age</span>
+                                <span id="val-age" class="value">--</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon" style="background:#FDF4FF; color:#A855F7;">
+                                <i class="fas fa-venus-mars"></i>
+                            </div>
+                            <div>
+                                <span class="label-small">Gender</span>
+                                <span id="val-gender" class="value">--</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon" style="background:#FFF7ED; color:#F97316;">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <span class="label-small">Country</span>
+                                <span id="val-country" class="value">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Actions -->
+                    <div class="details-card" style="margin-top: 20px;">
+                        <div class="details-card-header">
+                            <h2><i class="fas fa-shield-alt" style="color:#FF7070; margin-right:8px;"></i>Account Actions</h2>
+                        </div>
+                        <div class="detail-row" style="cursor:pointer;" onclick="navigate('forgot_password.html')">
+                            <div class="detail-icon" style="background:#FFF0F0; color:#FF5A5A;">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <span class="label-small">Security</span>
+                                <span class="value">Change Password</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="color:#E5E7EB;"></i>
+                        </div>
+                        <div class="detail-row" style="cursor:pointer;" onclick="navigate('edit_profile.html')">
+                            <div class="detail-icon" style="background:#EFF6FF; color:#3B82F6;">
+                                <i class="fas fa-user-edit"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <span class="label-small">Account</span>
+                                <span class="value">Edit Profile Information</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="color:#E5E7EB;"></i>
+                        </div>
+                        <div class="detail-row" style="cursor:pointer;" onclick="navigate('history.html')">
+                            <div class="detail-icon" style="background:#ECFDF5; color:#10B981;">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <span class="label-small">Data</span>
+                                <span class="value">View All Diagnoses</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="color:#E5E7EB;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const history = JSON.parse(localStorage.getItem('history') || '[]');
+            const diagEl = document.getElementById('stat-diagnoses');
+            if (diagEl) diagEl.innerText = history.length;
+        });
+    </script>
+</body>
+</html>
