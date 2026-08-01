@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Tricholens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; font-weight: 600;">Logging in...</p>
+    </div>
+
+    <div class="split-layout">
+        <div class="split-side-brand">
+            <img src="logo.png" alt="Logo"
+                style="width: 150px; height: 150px; margin-bottom: 24px; filter: brightness(0) invert(1);"
+                onerror="this.style.display='none'">
+            <h1 style="color: white; font-size: 48px; margin-bottom: 16px;">Tricholens</h1>
+            <p style="color: rgba(255,255,255,0.9); font-size: 20px; text-align: center; max-width: 500px;">
+                Advanced AI-powered scalp analysis and hair health tracking for professionals.
+            </p>
+        </div>
+
+        <div class="split-side-form">
+            <div style="width: 100%; max-width: 400px;">
+                <div style="margin-bottom: 40px;">
+                    <h1 style="font-size: 32px;">Welcome Back</h1>
+                    <p style="color: #6B7280;">Please enter your details to sign in.</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="input-group">
+                        <label class="label">Email Address</label>
+                        <div class="input-container">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="name@company.com" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">Password</label>
+                        <div class="input-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; margin-bottom: 24px;">
+                        <button type="button" class="text-button" onclick="navigate('forgot_password.html')">Forgot
+                            Password?</button>
+                    </div>
+
+                    <button type="submit" class="primary-button">LOG IN</button>
+                </form>
+
+                <div style="text-align: center; margin-top: 32px;">
+                    <p style="color: #6B7280;">Don't have an account?
+                        <a href="signup.html"
+                            style="color: var(--brand-pink); font-weight: 700; text-decoration: none;">Create one for
+                            free</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
