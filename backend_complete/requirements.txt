@@ -1,0 +1,11 @@
+flask
+flask-cors
+sqlalchemy
+pymysql
+passlib[bcrypt]
+resend
+pillow
+numpy<2
+tensorflow
+opencv-python-headless
+gunicorn
