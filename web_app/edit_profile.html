@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Tricholens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; font-weight: 600;">Updating Profile...</p>
+    </div>
+
+    <div class="sidebar-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo" style="height: 32px;" onerror="this.style.display='none'">
+                <h3 style="margin: 0; color: white;">Tricholens</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="diagnosis.html" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i> New Diagnosis
+                </a>
+                <a href="history.html" class="sidebar-link">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="haircare.html" class="sidebar-link">
+                    <i class="fas fa-leaf"></i> Care Hub
+                </a>
+                <a href="profile.html" class="sidebar-link active">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 20px;">
+                <button onclick="localStorage.clear(); navigate('login.html')" class="sidebar-link"
+                    style="background: none; border: none; width: 100%; cursor: pointer; text-align: left;">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <h1 style="font-size: 28px; margin-bottom: 4px;">Edit Profile</h1>
+                    <p style="color: #6B7280;">Update your account information.</p>
+                </div>
+                <button class="edit-button" style="background: #6B7280;"
+                    onclick="navigate('profile.html')">Cancel</button>
+            </header>
+
+            <div style="background: white; border-radius: 12px; border: 1px solid #E5E7EB; max-width: 600px;">
+                <form id="edit-profile-form">
+                    <div class="input-group">
+                        <label class="label">Full Name</label>
+                        <div class="input-container">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="edit-name" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">Mobile Number</label>
+                        <div class="input-container">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="edit-mobile">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">Date of Birth</label>
+                        <div class="input-container">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" id="edit-dob">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">Gender</label>
+                        <div class="input-container">
+                            <i class="fas fa-venus-mars"></i>
+                            <select id="edit-gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="label">Country</label>
+                        <div class="input-container">
+                            <i class="fas fa-globe"></i>
+                            <input type="text" id="edit-country">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-button"
+                        style="background: var(--brand-pink); margin-top: 20px;">SAVE CHANGES</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
