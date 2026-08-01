@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - Tricholens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { background: #0F172A; }
+        .sidebar-logo { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .sidebar-link { border-radius: 10px; margin: 2px 12px; padding: 11px 14px; font-size: 14px; font-weight: 500; }
+        .sidebar-link i { width: 20px; text-align: center; }
+        .sidebar-link:hover { background: rgba(255,255,255,0.07); color: #F9FAFB; }
+        .sidebar-link.active { background: linear-gradient(135deg, rgba(255,112,112,0.2), rgba(255,90,90,0.1)); color: #FF7070; border-left: 3px solid #FF7070; padding-left: 11px; }
+        .signout-btn { border-radius: 10px; margin: 2px 12px; padding: 11px 14px; font-size: 14px; color: #9CA3AF; display: flex; align-items: center; gap: 12px; background: none; border: none; width: calc(100% - 24px); cursor: pointer; transition: all 0.2s; }
+        .signout-btn:hover { background: rgba(239,68,68,0.1); color: #EF4444; }
+
+        .main-content { background: #F1F5F9; min-height: 100vh; }
+        .page-header { background: white; border-bottom: 1px solid #E5E7EB; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .page-header h1 { font-size: 22px; font-weight: 800; color: #0F172A; margin: 0; }
+        .page-header p { font-size: 13px; color: #6B7280; margin: 2px 0 0; }
+
+        .history-wrapper { margin: 28px 32px; }
+        .search-bar-box { background: white; border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; border: 1px solid #E5E7EB; margin-bottom: 20px; }
+        .search-bar-box i { color: #9CA3AF; font-size: 15px; }
+        .search-bar-box input { border: none; outline: none; background: transparent; font-size: 14px; color: #0F172A; width: 100%; }
+        .search-bar-box input::placeholder { color: #9CA3AF; }
+
+        .history-card-list { background: white; border-radius: 18px; border: 1px solid #E5E7EB; overflow: hidden; }
+        .history-card-header { padding: 18px 24px; border-bottom: 1px solid #F3F4F6; display: flex; justify-content: space-between; align-items: center; }
+        .history-card-header h2 { font-size: 16px; font-weight: 700; color: #0F172A; margin: 0; }
+        .history-card-header span { font-size: 12px; color: #9CA3AF; }
+
+        .h-item { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #F8FAFC; cursor: pointer; transition: background 0.15s; }
+        .h-item:last-child { border-bottom: none; }
+        .h-item:hover { background: #FAFAFA; }
+        .h-thumb { width: 54px; height: 54px; border-radius: 12px; object-fit: cover; background: #F3F4F6; flex-shrink: 0; }
+        .h-info h4 { font-size: 15px; font-weight: 700; color: #0F172A; margin: 0 0 3px; }
+        .h-info .condition-tag { display: inline-block; font-size: 12px; font-weight: 600; color: #FF5A5A; background: #FFF0F0; padding: 2px 10px; border-radius: 20px; }
+        .h-info .date-text { font-size: 12px; color: #9CA3AF; margin-top: 4px; }
+        .h-delete { background: none; border: none; color: #CBD5E1; cursor: pointer; padding: 8px; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .h-delete:hover { background: #FEF2F2; color: #EF4444; }
+        .empty-state { text-align: center; padding: 60px 24px; }
+        .empty-state i { font-size: 48px; color: #E5E7EB; display: block; margin-bottom: 14px; }
+        .empty-state h3 { font-size: 17px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+        .empty-state p { font-size: 13px; color: #9CA3AF; }
+        .start-btn { margin-top: 20px; background: linear-gradient(135deg, #FF7070, #FF5A5A); color: white; border: none; border-radius: 12px; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo" style="height: 30px;" onerror="this.style.display='none'">
+                <h3 style="margin: 0; color: white; font-size: 18px; font-weight: 700;">Tricholens</h3>
+            </div>
+            <nav class="sidebar-nav" style="padding: 12px 0;">
+                <a href="dashboard.html" class="sidebar-link">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a href="diagnosis.html" class="sidebar-link">
+                    <i class="fas fa-plus-circle"></i> New Diagnosis
+                </a>
+                <a href="history.html" class="sidebar-link active">
+                    <i class="fas fa-history"></i> History
+                </a>
+                <a href="haircare.html" class="sidebar-link">
+                    <i class="fas fa-leaf"></i> Care Hub
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </nav>
+            <div style="margin-top: auto; padding: 12px 0 20px;">
+                <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 0 12px 12px;"></div>
+                <button class="signout-btn" onclick="localStorage.clear(); navigate('login.html')">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>Analysis History</h1>
+                    <p>Your past scalp analysis reports and progress tracking.</p>
+                </div>
+                <button onclick="navigate('diagnosis.html')" style="background: linear-gradient(135deg,#FF7070,#FF5A5A); color: white; border: none; border-radius: 12px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-plus"></i> New Diagnosis
+                </button>
+            </div>
+
+            <div class="history-wrapper">
+                <!-- Search -->
+                <div class="search-bar-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search by patient name, condition...">
+                </div>
+
+                <!-- History List -->
+                <div class="history-card-list">
+                    <div class="history-card-header">
+                        <h2>All Records</h2>
+                        <span id="record-count">0 records</span>
+                    </div>
+                    <div id="history-container">
+                        <div class="empty-state">
+                            <i class="fas fa-microscope"></i>
+                            <h3>No Records Found</h3>
+                            <p>Start your first AI scalp analysis to see results here.</p>
+                            <button class="start-btn" onclick="navigate('diagnosis.html')">
+                                <i class="fas fa-camera"></i> Start Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Override history rendering for new design
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_BASE = "http://localhost:8118/";
+            const container = document.getElementById('history-container');
+            const searchInput = document.getElementById('search-input');
+            const recordCount = document.getElementById('record-count');
+
+            function renderHistory(filter = '') {
+                const history = JSON.parse(localStorage.getItem('history') || '[]');
+                const filtered = history.filter(item =>
+                    (item.condition || '').toLowerCase().includes(filter.toLowerCase()) ||
+                    (item.patient?.name || item.patient_name || '').toLowerCase().includes(filter.toLowerCase()) ||
+                    (item.observation || '').toLowerCase().includes(filter.toLowerCase())
+                );
+
+                recordCount.innerText = `${filtered.length} record${filtered.length !== 1 ? 's' : ''}`;
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-${filter ? 'search' : 'microscope'}"></i>
+                            <h3>${filter ? 'No Results Found' : 'No Records Yet'}</h3>
+                            <p>${filter ? 'Try a different search term.' : 'Start your first AI scalp analysis to see results here.'}</p>
+                            ${!filter ? '<button class="start-btn" onclick="navigate(\'diagnosis.html\')"><i class="fas fa-camera"></i> Start Analysis</button>' : ''}
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = filtered.map((item, index) => {
+                    const name = item.patient?.name || item.patient_name || 'Patient';
+                    const condition = item.condition || 'Scalp Analysis';
+                    const date = new Date(item.date || item.diagnosis_date || Date.now());
+                    const dateStr = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+                    let rawImg = item.image_url || item.image_path || item.imageUri;
+                    let imgSrc = '';
+                    if (rawImg) {
+                        if (rawImg.startsWith('data:') || rawImg.startsWith('http')) imgSrc = rawImg;
+                        else imgSrc = API_BASE + 'images/' + rawImg.split(/[/\\]/).pop();
+                    }
+
+                    return `
+                    <div class="h-item" onclick="viewDiagnosisDetail(${index})">
+                        <div style="display:flex; align-items:center; gap:16px; flex:1;">
+                            ${imgSrc
+                                ? `<img src="${imgSrc}" class="h-thumb" onerror="this.src=''; this.style.background='#F3F4F6';">`
+                                : `<div class="h-thumb" style="display:flex; align-items:center; justify-content:center; color:#CBD5E1; font-size:22px;"><i class="fas fa-image"></i></div>`}
+                            <div class="h-info">
+                                <h4>${name}</h4>
+                                <span class="condition-tag">${condition}</span>
+                                <div class="date-text"><i class="fas fa-clock" style="margin-right:4px;"></i>${dateStr}</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <button class="h-delete" onclick="event.stopPropagation(); deleteHistoryItemManual('${item.id}','${item.date}',${index})" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <i class="fas fa-chevron-right" style="color:#E5E7EB; font-size:12px;"></i>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            renderHistory();
+            if (searchInput) searchInput.addEventListener('input', e => renderHistory(e.target.value));
+        });
+    </script>
+</body>
+</html>
