@@ -1,0 +1,1582 @@
+[
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_3997_PNG.rf.9f55584fe7c5cfe948211dd282b67a46.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4001_JPG.rf.1850753eab90ee21237820bd9fbcd049.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4054_JPG.rf.b4da27a9bcca1b2221d86ac9b4754c50.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4178_JPG.rf.2d1122c999d928b0a1999fd4ca71438c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4843_JPG.rf.f6b8341083df2e36d0843ec0e17dbfbb.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4845_JPG.rf.aff00664511307ac562de7eebb101e08.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/AGA/IMG_4850_JPG.rf.653e03495fc65cfca7995054b0cf1a21.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/Unlabeled/IMG_4159_JPG.rf.32150a425454ae5b6475bb2ff5351b29.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/Unlabeled/IMG_4166_JPG.rf.d5c095b787a2715058fb25369de02073.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/Unlabeled/IMG_4180_JPG.rf.5f6c100dd750f9c79903ffe0a2df4b25.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/Unlabeled/IMG_4185_JPG.rf.3b7d43f7eb6422976520800bc7c1ec35.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/Unlabeled/IMG_4965_JPG.rf.d3a6d59efb6f31e800fe47d7966b6ca2.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/normal/IMG_3900_JPG.rf.f0fb3bd3b3b593f94f53d9772a800df7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/normal/IMG_3902_JPG.rf.1cc3511ed133e8b5d44cfc797bb838a5.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/normal/IMG_3904_JPG.rf.21eb0d016e545335d0a5408bb6952d03.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/normal/IMG_3927_JPG.rf.4492d2429f63e9170113ff0f6708bc9e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/test/normal/IMG_4129_JPG.rf.a3f5bd9b89c490a4dee05056754a8559.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3908_JPG.rf.8e83067f3f495c0e203d3b10993fbadc.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3911_JPG.rf.e933b0802109216fc01335a84e4d642d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3913_JPG.rf.6c89ae93c549d4c3d8365bd79b732906.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3914_JPG.rf.ad78b4b73bf1263e87e9a63ecd4209fb.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3916_JPG.rf.4548f0992153860ecf429c1ca89a045d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3917_JPG.rf.512176a55a910cea7e26bcd91b095e81.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3919_JPG.rf.3fc9f4f8fe2fa153730855241ba794ce.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3920_JPG.rf.b289e50f77618a2e2d5e39d216ecb2de.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3922_JPG.rf.c13e0ef8e2bd5ffda766a3f4617b6798.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3924_JPG.rf.14786863e77c299f4a7948a04fe82153.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3925_JPG.rf.51f7307acabcf6d20f74284cdd44270e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_3996_PNG.rf.bbe05cedc9183e4f1ebf84a8ad0da46e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4002_JPG.rf.af1914917d8e330e1d7d339a9c63ab42.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4003_JPG.rf.72847ec2e68e4237baa6b18b7c7dbbaf.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4049_JPG.rf.d3c455976d70a6e42c31dbe6ba7f53e6.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4050_JPG.rf.71c68380a377bdcc9312bc3ecd240fd0.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4051_JPG.rf.1b2fe2637839085824c96c674a42d709.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4052_JPG.rf.4a1f25d31c832faf3d38cd3044c33be0.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4053_JPG.rf.7c71c9a8acb2dd58e8180f0903c24178.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4055_JPG.rf.2e61b7109794ee738a88fe7079f1ed57.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4056_JPG.rf.025765dc544d9c0e3a3fa353488155b4.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4058_JPG.rf.2373c56b6b3ff46c9e3aa06fed96962f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4143_JPG.rf.f98c8e452cc974c5f91bdd6df6c5c879.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4144_JPG.rf.2fab16b00e4a22b72469c65bd663567c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4146_JPG.rf.351e62bcd747b4b1f4b9ee13f2a8bab1.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4148_JPG.rf.aad2fec999c71a2cdaf0958f03125af8.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4151_JPG.rf.56f5e7528c37448c58f29bfe4f8d431d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4153_JPG.rf.9388ee97fe518bc17d26dab12f96040a.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4158_JPG.rf.8e522c1851f31e99eefb642bfb6ad6db.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4164_JPG.rf.d960b16d83adbc4238543357a0916699.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4172_JPG.rf.a7253cd77dca1029ef92e2a76b35d337.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4175_JPG.rf.cdf26d8f3384b129e6908cb0c00a4b79.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4177_JPG.rf.c5fa78a7f9d1317d71e921aad27fc581.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4190_JPG.rf.8f1a5d9af7fff980fa28c0a98f56f322.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4195_JPG.rf.768b65e02677ca761b76f3e44ecb250c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4847_JPG.rf.796612b961c6e6a2df6b66c69514734c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/AGA/IMG_4955_JPG.rf.15f7c4de9d4102e456215cdda7afcf41.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4152_JPG.rf.b2ada0f1eecebe46a4ff7fa7e5b15218.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4155_JPG.rf.fb23776e65d5013ca094dd9bb3bd3c83.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4156_JPG.rf.e8a1b7e21d662bdc2e03083efaa41786.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4157_JPG.rf.835fb1fc994f91fc15863b31e744075d.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4160_JPG.rf.c8e72eaa12fb3a9eb11ae37439c5136f.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4161_JPG.rf.75d374a03226936b31b053f7b390e4d5.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4162_JPG.rf.ef8840d4b8aeadb11e2209a54a1958d3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4163_JPG.rf.a361119ff1d78c41a26d642402824496.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4165_JPG.rf.bb3e9c85f6ec3422ba501e43d238119e.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4176_JPG.rf.9bc8783951509c0711d128a017ceffa9.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4183_JPG.rf.34f9130e525b727ea74b0cfad95142e7.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4184_JPG.rf.0b73545a320efc0d6b653a4bade70cf3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4188_JPG.rf.cdc7cb35edb10efd43a206791f713014.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4191_JPG.rf.11508067ee1c8e1952f011b3b5b832cf.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4196_JPG.rf.52aec8bb148432ff81e1a4302d20049a.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4837_JPG.rf.a4ce21c2bc85808e77bbe1ace6a890db.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4840_JPG.rf.68d15a390c61c2950371c59758ef9521.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4846_JPG.rf.fc336950be05e95b30810c2a58788c22.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4848_JPG.rf.880217ac11ad8efcaff3104c3b0fb9c1.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4849_JPG.rf.1b881d71bf623a76e7765ee6e74dd617.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4952_JPG.rf.ad0426aea0e4a15404309f2c1ed9be8c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4953_JPG.rf.67858f83d055259e09c17d627b11457c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4956_JPG.rf.121dbcca704aa984b7b8b8bb7655cd2c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4957_JPG.rf.3dac8f5592cb79043b09d86e92f24ca2.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4958_JPG.rf.0876b1099157be670f494ff7538656fa.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4959_JPG.rf.17d314a8b14bcf6fee3f617989612a24.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4962_JPG.rf.ea233492efb5f911e9d88cc438555613.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4963_JPG.rf.69c4ea95de294e3b5cb07699172cd2d3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4968_JPG.rf.40f8ec0af7325d0ab1e9a1bae3c8998a.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4969_JPG.rf.66bf6837895449527b88532a7b7e0113.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4970_JPG.rf.e2e4af31cf3ed981f48e45fa1876a562.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4973_JPG.rf.90c119f590da2418e14c443490d8063b.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4975_JPG.rf.a7cda8790a7eda7232f7ce77a65250f9.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/Unlabeled/IMG_4977_JPG.rf.c5a44100fc3aefe5174439ed4a47dce6.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3889_JPG.rf.543ebd9bae6643cde77b86c6015871aa.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3898_JPG.rf.9df0e045fbb28426cb54c90ad25af33f.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3901_JPG.rf.27e44d1dedaa4a357c57b2a9cff3afc7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3903_JPG.rf.713d293f3df4b5932ad4c16724307aff.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3907_JPG.rf.df86d8d58e23f4ab698bb8e33fad61db.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3918_JPG.rf.dacb57f0aa2fc5999ed52c13a5a8c0a7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3921_JPG.rf.4406a6118d802f9d996801a62664b8b5.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3923_JPG.rf.f11abb946527375faeedcbf655b644b4.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3926_JPG.rf.a075563515757d2c69d2fe4a9e0994d7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3928_JPG.rf.4cb25d8dd1de195bf562cdcd37a4ed8d.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3929_JPG.rf.f831ad1f7e5abfecbd0c90f886fa8602.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3930_JPG.rf.67c05512b5a4634e3a3676e8e8f01b89.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3931_JPG.rf.c6f516e072569aed3cce4dab278d3611.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_3998_PNG.rf.a1e93d526bbb45f908febbad5068eb2e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4004_PNG.rf.47066e51f3d74dd5bdfa3d57433ac90e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4005_PNG.rf.5d02a3b3fb00570188fc0d2ef77ed5bb.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4006_PNG.rf.4a034e2b8ea8b869a63b9ec03173bc13.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4125_JPG.rf.835527c1b577e9b6954f67af005d8440.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4127_JPG.rf.434b3789085b9ef9c93b51b2f049a870.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4128_JPG.rf.743b94fff5df08364c8f41e731c3b346.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4131_JPG.rf.fcc9e3c858caa3691f241918fe409362.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4132_JPG.rf.27f3605e882fedd4e488b6be4773b552.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4134_JPG.rf.4d5b0449910e5d6fb7f5715d3d44f6a0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4135_JPG.rf.19f39d9a314e3e0754291f592cf0fe6a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4136_JPG.rf.3abe4fdd3a93866a59ef3e6f3952a395.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4137_JPG.rf.d1d57e09cfcec4f97a5b6b273f4891b0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4138_JPG.rf.9cc11bc6b4103725e36b0868c2daca70.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4139_JPG.rf.a441d1e78e0fa3e943ce47c5fe936205.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4140_JPG.rf.cd2872131245244e01e02dbdfab91186.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4141_JPG.rf.a6fb821fff8e8b48312c891f73b9037b.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4197_JPG.rf.dd2f248c291c7fb5d15db28bc2c8ffdf.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4834_JPG.rf.2ee2e212ab6f81ecc3c3cedf13c7ffbf.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4835_JPG.rf.baea94b48d6ebb558f92b189ad51208a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4836_JPG.rf.eadef1fd8a76fec8bc45e5359811289c.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4964_JPG.rf.da1d6dea5aa3c9f01150451f705995cd.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/train/normal/IMG_4974_JPG.rf.491416bcff46c19f49f17955c3663759.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_3910_JPG.rf.57be2c49b03be7c93d61e54672c93e5a.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_3912_JPG.rf.92b7ce04c92a2b29b3d952d81838846f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_3915_JPG.rf.f721282a79dd5f991b654c3600bf4ea8.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_3999_PNG.rf.961da4edd250197fa7c695530d6d17d7.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4057_JPG.rf.85a001103fa8affea6c8211677994f34.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4149_JPG.rf.a625db6cac9a775912bc85fec3248601.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4154_JPG.rf.8015d5ca01ad4a4b02de74d4e725c1a6.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4167_JPG.rf.6e9bdda467b48739b287e21787923308.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4174_JPG.rf.77d88d9e668bb3605dd6ed312d87ad6f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4192_JPG.rf.1cc447266e52de974898bcbc968325e5.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4193_JPG.rf.dcef2fbffd976a13b43f2d70ad8f950e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4194_JPG.rf.357b9db770dd1591574a61dea853280e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4839_JPG.rf.77763412fff9fbe9dc5015faf49fbd16.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/AGA/IMG_4841_JPG.rf.a58e47a972cddbbf76758fb46a41486e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4173_JPG.rf.87765071f2a5f2188c051807e6244ad1.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4179_JPG.rf.bf2e21a25dc4f35115d1feaa6968fffe.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4189_JPG.rf.ebab9dbe24ad75ccdbf811543e9d4661.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4838_JPG.rf.5a558b4b7748e33ac0aa75dcfd00c2eb.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4842_JPG.rf.bd9487fb04c532894327ec94c4895ec3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4844_JPG.rf.cab6153636794d2abca02f7fe3b4bd00.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4971_JPG.rf.6b48f89a178f71cc1e2fa3c1170662bf.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4972_JPG.rf.f5b4671f768a27388b0a01d91e9b15f5.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/Unlabeled/IMG_4976_JPG.rf.6538b1125f369083fd740f0e57044306.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_3890_JPG.rf.9bdc2f4a6f33dbd1c27f265b25a79dd6.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_3909_JPG.rf.5a070559a2e16ec897de9a402367c9b6.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_3933_JPG.rf.a7718a34a082b0980ab87b5104c7762b.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_3934_JPG.rf.40955aa8e045d12e2cf4d39ed79a2fa3.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4126_JPG.rf.8b76b0aa57f5751b3e156af53e2b57e4.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4130_JPG.rf.f459f6ae1f3c448bd0d287fe06fac81f.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4133_JPG.rf.61b2272658ebbf818b710abf2c7e244a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4954_JPG.rf.03949cfeead4738eac5881bb676d9227.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4960_JPG.rf.38ad84f756f58f18f5e54c248f92a1c3.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4961_JPG.rf.d1a5c96895b9022081660134a38bf137.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/Tricholens_Project 2/tricholens/actual data/valid/normal/IMG_4967_JPG.rf.a64a6f0dae701c2b440860ab0465d9b0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_3997_PNG.rf.9f55584fe7c5cfe948211dd282b67a46.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4001_JPG.rf.1850753eab90ee21237820bd9fbcd049.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4054_JPG.rf.b4da27a9bcca1b2221d86ac9b4754c50.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4178_JPG.rf.2d1122c999d928b0a1999fd4ca71438c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4843_JPG.rf.f6b8341083df2e36d0843ec0e17dbfbb.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4845_JPG.rf.aff00664511307ac562de7eebb101e08.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/AGA/IMG_4850_JPG.rf.653e03495fc65cfca7995054b0cf1a21.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/Unlabeled/IMG_4159_JPG.rf.32150a425454ae5b6475bb2ff5351b29.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/Unlabeled/IMG_4166_JPG.rf.d5c095b787a2715058fb25369de02073.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/Unlabeled/IMG_4180_JPG.rf.5f6c100dd750f9c79903ffe0a2df4b25.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/Unlabeled/IMG_4185_JPG.rf.3b7d43f7eb6422976520800bc7c1ec35.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/Unlabeled/IMG_4965_JPG.rf.d3a6d59efb6f31e800fe47d7966b6ca2.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/normal/IMG_3900_JPG.rf.f0fb3bd3b3b593f94f53d9772a800df7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/normal/IMG_3902_JPG.rf.1cc3511ed133e8b5d44cfc797bb838a5.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/normal/IMG_3904_JPG.rf.21eb0d016e545335d0a5408bb6952d03.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/normal/IMG_3927_JPG.rf.4492d2429f63e9170113ff0f6708bc9e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/test/normal/IMG_4129_JPG.rf.a3f5bd9b89c490a4dee05056754a8559.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3908_JPG.rf.8e83067f3f495c0e203d3b10993fbadc.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3911_JPG.rf.e933b0802109216fc01335a84e4d642d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3913_JPG.rf.6c89ae93c549d4c3d8365bd79b732906.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3914_JPG.rf.ad78b4b73bf1263e87e9a63ecd4209fb.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3916_JPG.rf.4548f0992153860ecf429c1ca89a045d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3917_JPG.rf.512176a55a910cea7e26bcd91b095e81.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3919_JPG.rf.3fc9f4f8fe2fa153730855241ba794ce.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3920_JPG.rf.b289e50f77618a2e2d5e39d216ecb2de.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3922_JPG.rf.c13e0ef8e2bd5ffda766a3f4617b6798.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3924_JPG.rf.14786863e77c299f4a7948a04fe82153.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3925_JPG.rf.51f7307acabcf6d20f74284cdd44270e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_3996_PNG.rf.bbe05cedc9183e4f1ebf84a8ad0da46e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4002_JPG.rf.af1914917d8e330e1d7d339a9c63ab42.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4003_JPG.rf.72847ec2e68e4237baa6b18b7c7dbbaf.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4049_JPG.rf.d3c455976d70a6e42c31dbe6ba7f53e6.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4050_JPG.rf.71c68380a377bdcc9312bc3ecd240fd0.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4051_JPG.rf.1b2fe2637839085824c96c674a42d709.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4052_JPG.rf.4a1f25d31c832faf3d38cd3044c33be0.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4053_JPG.rf.7c71c9a8acb2dd58e8180f0903c24178.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4055_JPG.rf.2e61b7109794ee738a88fe7079f1ed57.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4056_JPG.rf.025765dc544d9c0e3a3fa353488155b4.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4058_JPG.rf.2373c56b6b3ff46c9e3aa06fed96962f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4143_JPG.rf.f98c8e452cc974c5f91bdd6df6c5c879.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4144_JPG.rf.2fab16b00e4a22b72469c65bd663567c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4146_JPG.rf.351e62bcd747b4b1f4b9ee13f2a8bab1.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4148_JPG.rf.aad2fec999c71a2cdaf0958f03125af8.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4151_JPG.rf.56f5e7528c37448c58f29bfe4f8d431d.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4153_JPG.rf.9388ee97fe518bc17d26dab12f96040a.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4158_JPG.rf.8e522c1851f31e99eefb642bfb6ad6db.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4164_JPG.rf.d960b16d83adbc4238543357a0916699.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4172_JPG.rf.a7253cd77dca1029ef92e2a76b35d337.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4175_JPG.rf.cdf26d8f3384b129e6908cb0c00a4b79.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4177_JPG.rf.c5fa78a7f9d1317d71e921aad27fc581.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4190_JPG.rf.8f1a5d9af7fff980fa28c0a98f56f322.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4195_JPG.rf.768b65e02677ca761b76f3e44ecb250c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4847_JPG.rf.796612b961c6e6a2df6b66c69514734c.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/AGA/IMG_4955_JPG.rf.15f7c4de9d4102e456215cdda7afcf41.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4152_JPG.rf.b2ada0f1eecebe46a4ff7fa7e5b15218.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4155_JPG.rf.fb23776e65d5013ca094dd9bb3bd3c83.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4156_JPG.rf.e8a1b7e21d662bdc2e03083efaa41786.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4157_JPG.rf.835fb1fc994f91fc15863b31e744075d.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4160_JPG.rf.c8e72eaa12fb3a9eb11ae37439c5136f.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4161_JPG.rf.75d374a03226936b31b053f7b390e4d5.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4162_JPG.rf.ef8840d4b8aeadb11e2209a54a1958d3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4163_JPG.rf.a361119ff1d78c41a26d642402824496.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4165_JPG.rf.bb3e9c85f6ec3422ba501e43d238119e.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4176_JPG.rf.9bc8783951509c0711d128a017ceffa9.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4183_JPG.rf.34f9130e525b727ea74b0cfad95142e7.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4184_JPG.rf.0b73545a320efc0d6b653a4bade70cf3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4188_JPG.rf.cdc7cb35edb10efd43a206791f713014.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4191_JPG.rf.11508067ee1c8e1952f011b3b5b832cf.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4196_JPG.rf.52aec8bb148432ff81e1a4302d20049a.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4837_JPG.rf.a4ce21c2bc85808e77bbe1ace6a890db.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4840_JPG.rf.68d15a390c61c2950371c59758ef9521.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4846_JPG.rf.fc336950be05e95b30810c2a58788c22.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4848_JPG.rf.880217ac11ad8efcaff3104c3b0fb9c1.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4849_JPG.rf.1b881d71bf623a76e7765ee6e74dd617.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4952_JPG.rf.ad0426aea0e4a15404309f2c1ed9be8c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4953_JPG.rf.67858f83d055259e09c17d627b11457c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4956_JPG.rf.121dbcca704aa984b7b8b8bb7655cd2c.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4957_JPG.rf.3dac8f5592cb79043b09d86e92f24ca2.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4958_JPG.rf.0876b1099157be670f494ff7538656fa.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4959_JPG.rf.17d314a8b14bcf6fee3f617989612a24.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4962_JPG.rf.ea233492efb5f911e9d88cc438555613.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4963_JPG.rf.69c4ea95de294e3b5cb07699172cd2d3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4968_JPG.rf.40f8ec0af7325d0ab1e9a1bae3c8998a.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4969_JPG.rf.66bf6837895449527b88532a7b7e0113.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4970_JPG.rf.e2e4af31cf3ed981f48e45fa1876a562.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4973_JPG.rf.90c119f590da2418e14c443490d8063b.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4975_JPG.rf.a7cda8790a7eda7232f7ce77a65250f9.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/Unlabeled/IMG_4977_JPG.rf.c5a44100fc3aefe5174439ed4a47dce6.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3889_JPG.rf.543ebd9bae6643cde77b86c6015871aa.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3898_JPG.rf.9df0e045fbb28426cb54c90ad25af33f.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3901_JPG.rf.27e44d1dedaa4a357c57b2a9cff3afc7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3903_JPG.rf.713d293f3df4b5932ad4c16724307aff.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3907_JPG.rf.df86d8d58e23f4ab698bb8e33fad61db.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3918_JPG.rf.dacb57f0aa2fc5999ed52c13a5a8c0a7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3921_JPG.rf.4406a6118d802f9d996801a62664b8b5.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3923_JPG.rf.f11abb946527375faeedcbf655b644b4.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3926_JPG.rf.a075563515757d2c69d2fe4a9e0994d7.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3928_JPG.rf.4cb25d8dd1de195bf562cdcd37a4ed8d.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3929_JPG.rf.f831ad1f7e5abfecbd0c90f886fa8602.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3930_JPG.rf.67c05512b5a4634e3a3676e8e8f01b89.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3931_JPG.rf.c6f516e072569aed3cce4dab278d3611.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_3998_PNG.rf.a1e93d526bbb45f908febbad5068eb2e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4004_PNG.rf.47066e51f3d74dd5bdfa3d57433ac90e.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4005_PNG.rf.5d02a3b3fb00570188fc0d2ef77ed5bb.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4006_PNG.rf.4a034e2b8ea8b869a63b9ec03173bc13.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4125_JPG.rf.835527c1b577e9b6954f67af005d8440.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4127_JPG.rf.434b3789085b9ef9c93b51b2f049a870.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4128_JPG.rf.743b94fff5df08364c8f41e731c3b346.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4131_JPG.rf.fcc9e3c858caa3691f241918fe409362.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4132_JPG.rf.27f3605e882fedd4e488b6be4773b552.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4134_JPG.rf.4d5b0449910e5d6fb7f5715d3d44f6a0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4135_JPG.rf.19f39d9a314e3e0754291f592cf0fe6a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4136_JPG.rf.3abe4fdd3a93866a59ef3e6f3952a395.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4137_JPG.rf.d1d57e09cfcec4f97a5b6b273f4891b0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4138_JPG.rf.9cc11bc6b4103725e36b0868c2daca70.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4139_JPG.rf.a441d1e78e0fa3e943ce47c5fe936205.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4140_JPG.rf.cd2872131245244e01e02dbdfab91186.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4141_JPG.rf.a6fb821fff8e8b48312c891f73b9037b.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4197_JPG.rf.dd2f248c291c7fb5d15db28bc2c8ffdf.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4834_JPG.rf.2ee2e212ab6f81ecc3c3cedf13c7ffbf.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4835_JPG.rf.baea94b48d6ebb558f92b189ad51208a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4836_JPG.rf.eadef1fd8a76fec8bc45e5359811289c.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4964_JPG.rf.da1d6dea5aa3c9f01150451f705995cd.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/train/normal/IMG_4974_JPG.rf.491416bcff46c19f49f17955c3663759.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_3910_JPG.rf.57be2c49b03be7c93d61e54672c93e5a.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_3912_JPG.rf.92b7ce04c92a2b29b3d952d81838846f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_3915_JPG.rf.f721282a79dd5f991b654c3600bf4ea8.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_3999_PNG.rf.961da4edd250197fa7c695530d6d17d7.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4057_JPG.rf.85a001103fa8affea6c8211677994f34.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4149_JPG.rf.a625db6cac9a775912bc85fec3248601.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4154_JPG.rf.8015d5ca01ad4a4b02de74d4e725c1a6.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4167_JPG.rf.6e9bdda467b48739b287e21787923308.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4174_JPG.rf.77d88d9e668bb3605dd6ed312d87ad6f.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4192_JPG.rf.1cc447266e52de974898bcbc968325e5.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4193_JPG.rf.dcef2fbffd976a13b43f2d70ad8f950e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4194_JPG.rf.357b9db770dd1591574a61dea853280e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4839_JPG.rf.77763412fff9fbe9dc5015faf49fbd16.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/AGA/IMG_4841_JPG.rf.a58e47a972cddbbf76758fb46a41486e.jpg",
+        "category": "AGA",
+        "name": "IMG AGA"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4173_JPG.rf.87765071f2a5f2188c051807e6244ad1.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4179_JPG.rf.bf2e21a25dc4f35115d1feaa6968fffe.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4189_JPG.rf.ebab9dbe24ad75ccdbf811543e9d4661.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4838_JPG.rf.5a558b4b7748e33ac0aa75dcfd00c2eb.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4842_JPG.rf.bd9487fb04c532894327ec94c4895ec3.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4844_JPG.rf.cab6153636794d2abca02f7fe3b4bd00.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4971_JPG.rf.6b48f89a178f71cc1e2fa3c1170662bf.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4972_JPG.rf.f5b4671f768a27388b0a01d91e9b15f5.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/Unlabeled/IMG_4976_JPG.rf.6538b1125f369083fd740f0e57044306.jpg",
+        "category": "Unlabeled",
+        "name": "IMG Unlabeled"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_3890_JPG.rf.9bdc2f4a6f33dbd1c27f265b25a79dd6.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_3909_JPG.rf.5a070559a2e16ec897de9a402367c9b6.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_3933_JPG.rf.a7718a34a082b0980ab87b5104c7762b.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_3934_JPG.rf.40955aa8e045d12e2cf4d39ed79a2fa3.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4126_JPG.rf.8b76b0aa57f5751b3e156af53e2b57e4.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4130_JPG.rf.f459f6ae1f3c448bd0d287fe06fac81f.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4133_JPG.rf.61b2272658ebbf818b710abf2c7e244a.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4954_JPG.rf.03949cfeead4738eac5881bb676d9227.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4960_JPG.rf.38ad84f756f58f18f5e54c248f92a1c3.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4961_JPG.rf.d1a5c96895b9022081660134a38bf137.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    },
+    {
+        "path": "/Users/sail/Downloads/actual data/valid/normal/IMG_4967_JPG.rf.a64a6f0dae701c2b440860ab0465d9b0.jpg",
+        "category": "normal",
+        "name": "IMG normal"
+    }
+]
