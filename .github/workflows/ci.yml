@@ -36,19 +36,19 @@ jobs:
 
       - name: 📦 Install backend dependencies
         run: |
-          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+          pip install flask flask-cors sqlalchemy pillow "numpy<2" opencv-python-headless "passlib[bcrypt]" bcrypt resend requests
 
       - name: 📦 Install test dependencies
         run: |
-          pip install pytest pytest-html pytest-xdist selenium webdriver-manager
+          pip install pytest pytest-html pytest-xdist pytest-timeout selenium webdriver-manager
 
       - name: 🚀 Start backend server
         run: |
           cd backend_complete
-          python single_server.py &
+          python single_server.py > /tmp/server.log 2>&1 &
           echo "Server PID: $!"
-          sleep 5
-          curl -f http://localhost:8118/ || (echo "Server failed to start" && exit 1)
+          sleep 8
+          curl -f http://localhost:8118/ || (echo "--- Server Log ---" && cat /tmp/server.log && exit 1)
 
       - name: 🧪 Run Selenium Tests (300 test cases)
         run: |
@@ -109,7 +109,7 @@ jobs:
 
       - name: 📦 Install backend dependencies
         run: |
-          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+          pip install flask flask-cors sqlalchemy pillow "numpy<2" opencv-python-headless "passlib[bcrypt]" bcrypt resend requests
 
       - name: 📦 Install test dependencies
         run: |
@@ -118,9 +118,9 @@ jobs:
       - name: 🚀 Start backend server
         run: |
           cd backend_complete
-          python single_server.py &
-          sleep 5
-          curl -f http://localhost:8118/ || exit 1
+          python single_server.py > /tmp/server.log 2>&1 &
+          sleep 8
+          curl -f http://localhost:8118/ || (echo "--- Server Log ---" && cat /tmp/server.log && exit 1)
 
       - name: ⚡ Run Load Tests (300 test cases)
         run: |
@@ -181,7 +181,7 @@ jobs:
 
       - name: 📦 Install backend dependencies
         run: |
-          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+          pip install flask flask-cors sqlalchemy pillow "numpy<2" opencv-python-headless "passlib[bcrypt]" bcrypt resend requests
 
       - name: 📦 Install test dependencies
         run: |
@@ -190,9 +190,9 @@ jobs:
       - name: 🚀 Start backend server
         run: |
           cd backend_complete
-          python single_server.py &
-          sleep 5
-          curl -f http://localhost:8118/ || exit 1
+          python single_server.py > /tmp/server.log 2>&1 &
+          sleep 8
+          curl -f http://localhost:8118/ || (echo "--- Server Log ---" && cat /tmp/server.log && exit 1)
 
       - name: 📱 Run Appium Mobile API Tests (300 test cases)
         run: |
@@ -257,7 +257,7 @@ jobs:
 
       - name: 📦 Install backend dependencies
         run: |
-          pip install flask flask-cors sqlalchemy pillow numpy opencv-python-headless passlib bcrypt requests
+          pip install flask flask-cors sqlalchemy pillow "numpy<2" opencv-python-headless "passlib[bcrypt]" bcrypt resend requests
 
       - name: 📦 Install security test dependencies
         run: |
@@ -266,9 +266,9 @@ jobs:
       - name: 🚀 Start backend server
         run: |
           cd backend_complete
-          python single_server.py &
-          sleep 5
-          curl -f http://localhost:8118/ || exit 1
+          python single_server.py > /tmp/server.log 2>&1 &
+          sleep 8
+          curl -f http://localhost:8118/ || (echo "--- Server Log ---" && cat /tmp/server.log && exit 1)
 
       - name: 🔍 Run Bandit Static Analysis (pre-test)
         run: |

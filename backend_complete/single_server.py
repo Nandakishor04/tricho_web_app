@@ -137,11 +137,11 @@ def method_not_allowed(e):
 
 @app.errorhandler(500)
 def internal_error(e):
-    return jsonify({"status": "error", "message": str(e)}), 500
+    return jsonify({"status": "error", "message": "Internal server error"}), 500
 
 @app.errorhandler(Exception)
 def unhandled_exception(e):
-    return jsonify({"status": "error", "message": str(e)}), 500
+    return jsonify({"status": "error", "message": "An unexpected error occurred"}), 500
 
 MODEL_VERSION = "Tricholens_Engine_v11.2_Stable"
 
