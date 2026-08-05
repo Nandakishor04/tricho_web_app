@@ -21,7 +21,7 @@
             width: 280px;
             height: auto;
             margin-bottom: 60px;
-            animation: float 3s ease-in-out infinite;
+            animation: float 3s ease-in-out;
         }
         
         @keyframes float {
@@ -46,7 +46,7 @@
         </div>
 
         <div class="splash-container">
-            <img src="logo.png" alt="Logo" class="splash-logo" onerror="this.src='/path/to/placeholder_logo.png'">
+            <img src="logo.png" alt="Logo" class="splash-logo" onerror="this.style.display='none'">
             <h1 class="brand-title">TRICHOLENS</h1>
             
             <button class="primary-button" style="width: 200px;" onclick="handleStart()">Start</button>
