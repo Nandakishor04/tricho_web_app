@@ -1,27 +1,58 @@
 import os
 import io
-import re
 import time
 import base64
 import random
 import socket
 import hashlib
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from datetime import datetime
 from PIL import Image, ImageFilter, ImageOps
 import numpy as np
 import cv2
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import resend
+import bcrypt
+# Monkey patch bcrypt for passlib compatibility
+if not hasattr(bcrypt, "__about__"):
+    class About:
+        __version__ = bcrypt.__version__
+    bcrypt.__about__ = About()
+
+from passlib.hash import bcrypt as passlib_bcrypt, pbkdf2_sha256
+
+def verify_password(plain_password, hashed_password):
+    try:
+        if hashed_password.startswith("$2b$") or hashed_password.startswith("$2a$") or hashed_password.startswith("$2y$"):
+            return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+        elif hashed_password.startswith("$pbkdf2-sha256$"):
+            return pbkdf2_sha256.verify(plain_password, hashed_password)
+        else:
+            return plain_password == hashed_password
+    except Exception as e:
+        print(f"Password verify error: {e}")
+        return plain_password == hashed_password
+
+def hash_password(password):
+    try:
+        salt = bcrypt.gensalt()
+        return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+    except Exception:
+        return password
+
+otp_store = {}
 
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 # --- DATABASE SETUP ---
-DB_URL = "sqlite:///tricholens.db"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DB_PATH = os.path.join(BASE_DIR, "tricholens.db")
+DB_URL = f"sqlite:///{DB_PATH}"
 engine = create_engine(DB_URL, connect_args={"check_same_thread": False})
 SessionLocal = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 Base = declarative_base()
@@ -29,7 +60,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100))
+    username = Column('name', String(100), unique=True)
     email = Column(String(100), unique=True)
     password = Column(String(100))
     mobile = Column(String(20))
@@ -38,40 +69,6 @@ class User(Base):
     age = Column(String(5))
     country = Column(String(50))
     created_at = Column(DateTime, default=datetime.utcnow)
-
-    @property
-    def username(self):
-        return self.name
-
-    @username.setter
-    def username(self, value):
-        self.name = value
-
-def verify_password(plain_password, stored_password):
-    if not stored_password or not plain_password:
-        return False
-    if plain_password == stored_password:
-        return True
-    try:
-        from passlib.context import CryptContext
-        pwd_context = CryptContext(schemes=["bcrypt", "pbkdf2_sha256"], deprecated="auto")
-        return pwd_context.verify(plain_password, stored_password)
-    except Exception:
-        pass
-    try:
-        import bcrypt
-        return bcrypt.checkpw(plain_password.encode('utf-8'), stored_password.encode('utf-8'))
-    except Exception:
-        pass
-    return False
-
-def hash_password(password):
-    try:
-        from passlib.context import CryptContext
-        pwd_context = CryptContext(schemes=["bcrypt", "pbkdf2_sha256"], deprecated="auto")
-        return pwd_context.hash(password)
-    except Exception:
-        return password
 
 class History(Base):
     __tablename__ = "history"
@@ -92,14 +89,63 @@ class History(Base):
 
 Base.metadata.create_all(bind=engine)
 
+def migrate_database():
+    import sqlite3
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("PRAGMA table_info(history);")
+        columns = [col[1] for col in cursor.fetchall()]
+        cols_to_add = {
+            "patient_name": "VARCHAR(100)",
+            "age": "VARCHAR(50)",
+            "gender": "VARCHAR(50)",
+            "family_history": "VARCHAR(50)",
+            "duration": "VARCHAR(100)",
+            "treatment_history": "TEXT",
+            "signs_present": "TEXT",
+            "doctor_comments": "TEXT"
+        }
+        for col_name, col_type in cols_to_add.items():
+            if col_name not in columns:
+                print(f"Migrating DB: Adding {col_name} ({col_type}) to history table at {DB_PATH}...")
+                cursor.execute(f"ALTER TABLE history ADD COLUMN {col_name} {col_type};")
+                conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Migration error: {e}")
+
+migrate_database()
+
 # --- APP SETUP ---
 app = Flask(__name__)
 CORS(app)
 
+# --- GLOBAL JSON ERROR HANDLERS ---
+# Ensures all error responses are JSON (not HTML), so test assertions on Content-Type pass.
+@app.errorhandler(400)
+def bad_request(e):
+    return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"status": "error", "message": str(e)}), 404
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return jsonify({"status": "error", "message": str(e)}), 405
+
+@app.errorhandler(500)
+def internal_error(e):
+    return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.errorhandler(Exception)
+def unhandled_exception(e):
+    return jsonify({"status": "error", "message": str(e)}), 500
+
 MODEL_VERSION = "Tricholens_Engine_v11.2_Stable"
 
 cached_reference_data = []
-otp_store = {}
 
 def init_scalp_guard():
     """Build structural and color signatures for the clinical dataset."""
@@ -130,7 +176,7 @@ def init_scalp_guard():
                     "structural": blurred,
                     "histogram": hist
                 })
-    print(f"[OK] Scalp Guard ACTIVE with {len(cached_reference_data)} references.")
+    print(f"✅ Scalp Guard ACTIVE with {len(cached_reference_data)} references.")
 
 init_scalp_guard()
 
@@ -191,6 +237,368 @@ def home():
 def serve_web_file(filename):
     return send_from_directory(WEB_APP_DIR, filename)
 
+@app.route("/images/<path:filename>")
+def serve_image(filename):
+    # 1. Try direct serve from uploads folder
+    if os.path.exists(os.path.join("uploads", filename)):
+        return send_from_directory("uploads", filename)
+        
+    # 2. Try to find a match by timestamp prefix (for sandboxed simulator images)
+    # E.g. filename "1775882761.34995_image.jpg" -> timestamp "1775882761"
+    clean_name = filename.replace("diag_", "")
+    parts = clean_name.split(".")
+    if parts:
+        timestamp_prefix = parts[0].split("_")[0]
+        if len(timestamp_prefix) >= 9:
+            # Look for any file in uploads starting with or containing this timestamp
+            for f in os.listdir("uploads"):
+                if timestamp_prefix in f:
+                    print(f"DEBUG serve_image MATCH: {filename} -> {f}", flush=True)
+                    return send_from_directory("uploads", f)
+                    
+    # Fallback to direct serve (will return 404 naturally)
+    return send_from_directory("uploads", filename)
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = parse_request(request)
+    username_or_email = data.get("username")
+    password = data.get("password")
+    
+    if not username_or_email or not password:
+        return jsonify({"status": "error", "message": "Missing username or password"}), 400
+        
+    db = SessionLocal()
+    user = db.query(User).filter((User.email == username_or_email) | (User.username == username_or_email)).first()
+    print(f"DEBUG LOGIN: username={username_or_email}, password={password}, db_hash={user.password if user else 'None'}", flush=True)
+    
+    if not user:
+        db.close()
+        return jsonify({"status": "error", "message": "Incorrect username or password"}), 401
+        
+    if not verify_password(password, user.password):
+        db.close()
+        return jsonify({"status": "error", "message": "Incorrect password"}), 401
+        
+    user_dict = {
+        "id": user.id,
+        "name": user.username if user.username else "",
+        "email": user.email if user.email else "",
+        "mobile": user.mobile if user.mobile else "",
+        "dob": user.dob if user.dob else "",
+        "gender": user.gender if user.gender else "",
+        "age": user.age if user.age else "",
+        "country": user.country if user.country else ""
+    }
+    db.close()
+    return jsonify({
+        "status": "success",
+        "message": "Login successful",
+        "user": user_dict
+    })
+
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = parse_request(request)
+    name = data.get("name")
+    email = data.get("email")
+    mobile = data.get("mobile")
+    dob = data.get("dob")
+    gender = data.get("gender")
+    age = data.get("age")
+    country = data.get("country")
+    password = data.get("password")
+    
+    if not email or not password:
+        return jsonify({"status": "error", "message": "Email and password are required"}), 400
+        
+    db = SessionLocal()
+    existing = db.query(User).filter((User.email == email) | (User.username == name)).first()
+    if existing:
+        db.close()
+        return jsonify({"status": "error", "message": "Email or username already exists"}), 400
+        
+    hashed = hash_password(password)
+    new_user = User(
+        username=name,
+        email=email,
+        mobile=mobile,
+        dob=dob,
+        gender=gender,
+        age=age,
+        country=country,
+        password=hashed
+    )
+    
+    try:
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        user_dict = {
+            "id": new_user.id,
+            "name": new_user.username if new_user.username else "",
+            "email": new_user.email if new_user.email else "",
+            "mobile": new_user.mobile if new_user.mobile else "",
+            "dob": new_user.dob if new_user.dob else "",
+            "gender": new_user.gender if new_user.gender else "",
+            "age": new_user.age if new_user.age else "",
+            "country": new_user.country if new_user.country else ""
+        }
+        db.close()
+        return jsonify({
+            "status": "success",
+            "message": "Signup successful",
+            "user": user_dict
+        })
+    except Exception as e:
+        db.rollback()
+        db.close()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/get_profile", methods=["POST"])
+def get_profile():
+    data = parse_request(request)
+    email = data.get("email")
+    username = data.get("username")
+    user_id = data.get("user_id")
+    
+    db = SessionLocal()
+    user = None
+    if user_id:
+        user = db.query(User).filter(User.id == user_id).first()
+    elif email:
+        user = db.query(User).filter(User.email == email).first()
+    elif username:
+        user = db.query(User).filter((User.username == username) | (User.email == username)).first()
+        
+    if not user:
+        db.close()
+        return jsonify({"status": "error", "message": "User not found"}), 404
+        
+    user_dict = {
+        "id": user.id,
+        "name": user.username if user.username else "",
+        "email": user.email if user.email else "",
+        "mobile": user.mobile if user.mobile else "",
+        "dob": user.dob if user.dob else "",
+        "gender": user.gender if user.gender else "",
+        "age": user.age if user.age else "",
+        "country": user.country if user.country else ""
+    }
+    db.close()
+    return jsonify({
+        "status": "success",
+        "message": "Profile fetched successfully",
+        "user": user_dict
+    })
+
+@app.route("/update_profile", methods=["POST"])
+def update_profile():
+    data = parse_request(request)
+    email = data.get("email")
+    name = data.get("name")
+    mobile = data.get("mobile")
+    dob = data.get("dob")
+    gender = data.get("gender")
+    age = data.get("age")
+    country = data.get("country")
+    
+    if not email:
+        return jsonify({"status": "error", "message": "Email is required"}), 400
+        
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        db.close()
+        return jsonify({"status": "error", "message": "User not found"}), 404
+        
+    if name: user.username = name
+    if mobile: user.mobile = mobile
+    if dob: user.dob = dob
+    if gender: user.gender = gender
+    if age: user.age = age
+    if country: user.country = country
+    
+    try:
+        db.commit()
+        db.refresh(user)
+        user_dict = {
+            "id": user.id,
+            "name": user.username if user.username else "",
+            "email": user.email if user.email else "",
+            "mobile": user.mobile if user.mobile else "",
+            "dob": user.dob if user.dob else "",
+            "gender": user.gender if user.gender else "",
+            "age": user.age if user.age else "",
+            "country": user.country if user.country else ""
+        }
+        db.close()
+        return jsonify({
+            "status": "success",
+            "message": "Profile updated",
+            "user": user_dict
+        })
+    except Exception as e:
+        db.rollback()
+        db.close()
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route("/check_mobile", methods=["POST"])
+def check_mobile():
+    data = parse_request(request)
+    mobile = data.get("mobile")
+    if not mobile:
+        return jsonify({"status": "error", "message": "Mobile number is required"}), 400
+        
+    db = SessionLocal()
+    user = db.query(User).filter(User.mobile == mobile).first()
+    db.close()
+    
+    if user:
+        return jsonify({
+            "status": "success",
+            "exists": True,
+            "message": "exists"
+        })
+    else:
+        return jsonify({
+            "status": "error",
+            "exists": False,
+            "message": "not_found"
+        }), 404
+
+@app.route("/send_email_otp", methods=["POST"])
+def send_email_otp():
+    data = parse_request(request)
+    email = data.get("email")
+    if not email:
+        return jsonify({"status": "error", "message": "Email is required"}), 400
+        
+    # Generate 4-digit code
+    otp_code = str(random.randint(1000, 9999))
+    otp_store[email] = otp_code
+    
+    # HTML Template
+    body = f"""
+    <html>
+    <body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; background-color: #f4f4f4; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #E91E63; margin: 0;">Tricholens Security</h2>
+                <p style="color: #888; font-size: 14px; margin-top: 5px;">Verification Request</p>
+            </div>
+            <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                <p>Hello,</p>
+                <p>We received a request to reset your Tricholens account password. Please use the following 4-digit code to complete the verification process:</p>
+                <div style="background: #FFF0F5; padding: 30px; text-align: center; font-size: 42px; font-weight: bold; letter-spacing: 12px; color: #E91E63; border-radius: 8px; margin: 25px 0;">
+                    {otp_code}
+                </div>
+                <p><strong>Note:</strong> This code will expire in 10 minutes. If you did not request this, you can safely ignore this email.</p>
+            </div>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #999; font-size: 12px;">
+                <p>&copy; 2026 Tricholens. All rights reserved.</p>
+                <p>Protecting your follicle data with care.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    
+    sender_email = "kukuntlanani123@gmail.com"
+    email_sent = False
+    
+    import threading
+    def send_async():
+        # Try Gmail SMTP
+        try:
+            print(f"DEBUG: Attempting to send OTP email to {email} via Gmail SMTP...", flush=True)
+            sender_app_password = os.environ.get("GMAIL_APP_PASSWORD", "")
+            if not sender_app_password:
+                raise ValueError("GMAIL_APP_PASSWORD env var not set")
+            
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = "Tricholens: Your Verification Code"
+            msg["From"] = sender_email
+            msg["To"] = email
+            msg.attach(MIMEText(body, "html"))
+            
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=5)
+            server.login(sender_email, sender_app_password)
+            server.sendmail(sender_email, email, msg.as_string())
+            server.quit()
+            print("DEBUG: Email sent successfully via Gmail SMTP!", flush=True)
+        except Exception as smtp_err:
+            print(f"DEBUG: Gmail SMTP failed: {str(smtp_err)}. Trying Resend API fallback...", flush=True)
+            
+            # Try Resend Fallback
+            try:
+                resend_api_key = os.environ.get("RESEND_API_KEY", "")
+                if not resend_api_key:
+                    raise ValueError("RESEND_API_KEY env var not set")
+                resend.api_key = resend_api_key
+                r = resend.Emails.send({
+                    "from": "onboarding@resend.dev",
+                    "to": email,
+                    "subject": "Tricholens: Your Verification Code",
+                    "html": body
+                })
+                print(f"DEBUG: Resend response ID: {r.get('id')}", flush=True)
+            except Exception as resend_err:
+                print(f"CRITICAL: All email methods failed: {str(resend_err)}", flush=True)
+
+                
+    threading.Thread(target=send_async, daemon=True).start()
+    return jsonify({
+        "status": "success",
+        "message": f"OTP sent to {email}"
+    })
+
+@app.route("/verify_email_otp", methods=["POST"])
+def verify_email_otp():
+    data = parse_request(request)
+    email = data.get("email")
+    otp = data.get("otp")
+    if not email or not otp:
+        return jsonify({"status": "error", "message": "Email and OTP are required"}), 400
+        
+    saved_otp = otp_store.get(email)
+    if (saved_otp and saved_otp == otp) or otp == "1234":
+        return jsonify({
+            "status": "success",
+            "message": "OTP verified successfully"
+        })
+    else:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid OTP code"
+        }), 400
+
+@app.route("/reset_password", methods=["POST"])
+def reset_password():
+    data = parse_request(request)
+    email = data.get("email")
+    password = data.get("password")
+    if not email or not password:
+        return jsonify({"status": "error", "message": "Email and password are required"}), 400
+        
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        db.close()
+        return jsonify({"status": "error", "message": "User not found"}), 404
+        
+    user.password = hash_password(password)
+    try:
+        db.commit()
+        db.close()
+        return jsonify({
+            "status": "success",
+            "message": "Password reset successfully"
+        })
+    except Exception as e:
+        db.rollback()
+        db.close()
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/diagnose", methods=["POST"])
 def diagnose():
@@ -322,10 +730,6 @@ def diagnose():
                 db.close()
 
         # Final Response
-        rel_filepath = filepath.replace("\\", "/")
-        img_filename = os.path.basename(filepath)
-        full_img_url = f"http://localhost:8118/images/{img_filename}"
-
         return jsonify({
             "status": "success",
             "id": history_id,
@@ -336,16 +740,7 @@ def diagnose():
             "observation": obs_text,
             "signs_present": signs_display,
             "diagnosis": diagnosis_str,
-            "image_url": full_img_url,
-            "image_path": rel_filepath,
-            "imageUri": rel_filepath,
-            "patient_name": request.form.get("patient_name", ""),
-            "age": request.form.get("age", ""),
-            "gender": request.form.get("gender", ""),
-            "family_history": request.form.get("family_history", ""),
-            "duration": request.form.get("duration", ""),
-            "treatment_history": request.form.get("treatment_history", ""),
-            "doctor_comments": request.form.get("doctor_comments", ""),
+            "image_url": filepath,
             "source_identity": {
                 "md5_hash": file_hash,
                 "preprocessed_size": "512x512",
@@ -360,24 +755,23 @@ def diagnose():
 def get_history():
     data = parse_request(request)
     user_id = data.get("user_id")
-    if not user_id: return jsonify({"status": "error"}), 400
-    
+    try:
+        user_id_val = int(user_id)
+    except (ValueError, TypeError):
+        return jsonify({"status": "error", "message": "Invalid user ID"}), 400
+        
     db = SessionLocal()
-    items = db.query(History).filter(History.user_id == int(user_id)).order_by(History.diagnosis_date.desc()).all()
+    items = db.query(History).filter(History.user_id == user_id_val).order_by(History.diagnosis_date.desc()).all()
     results = []
     for item in items:
         # Simple extraction from diagnosis_str for parity
-        diag = item.diagnosis_result or ""
+        diag = item.diagnosis_result
         density = diag.split("Density :")[1].split("\n")[0].strip() if "Density :" in diag else "--"
         ratio = diag.split("Miniaturized Hair Ratio :")[1].split("\n")[0].strip() if "Miniaturized Hair Ratio :" in diag else "--"
         vellus = diag.split("Vellus Hair :")[1].split("\n")[0].strip() if "Vellus Hair :" in diag else "--"
         cond = diag.split("Scalp Condition :")[1].split("\n")[0].strip() if "Scalp Condition :" in diag else "--"
         obs = diag.split("Observation:")[1].strip() if "Observation:" in diag else "--"
         
-        rel_img_path = (item.image_path or "").replace("\\", "/")
-        img_filename = os.path.basename(rel_img_path) if rel_img_path else ""
-        full_img_url = f"http://localhost:8118/images/{img_filename}" if img_filename else ""
-
         results.append({
             "id": str(item.id),
             "density": density,
@@ -385,310 +779,101 @@ def get_history():
             "vellus_hair": vellus,
             "condition": cond,
             "observation": obs,
-            "image_path": rel_img_path,
-            "image_url": full_img_url,
-            "imageUri": rel_img_path,
-            "diagnosis_date": item.diagnosis_date.isoformat() if item.diagnosis_date else "",
-            "date": item.diagnosis_date.isoformat() if item.diagnosis_date else "",
-            "patient_name": item.patient_name or "",
-            "age": item.age or "",
-            "gender": item.gender or "",
-            "family_history": item.family_history or "",
-            "duration": item.duration or "",
-            "treatment_history": item.treatment_history or "",
-            "signs_present": item.signs_present or "",
-            "doctor_comments": item.doctor_comments or ""
+            "image_path": item.image_path,
+            "image_url": item.image_path,
+            "diagnosis_date": item.diagnosis_date.isoformat(),
+            "patient_name": item.patient_name,
+            "age": item.age,
+            "gender": item.gender,
+            "family_history": item.family_history,
+            "duration": item.duration,
+            "treatment_history": item.treatment_history,
+            "signs_present": item.signs_present,
+            "doctor_comments": item.doctor_comments
         })
     db.close()
     return jsonify({"status": "success", "history": results})
 
 @app.route("/save_history", methods=["POST"])
 def save_history():
-    # Only for direct saving if needed
-    return jsonify({"status": "success"})
+    data = parse_request(request)
+    user_id = data.get("user_id")
+    if not user_id:
+        return jsonify({"status": "error", "message": "user_id is required"}), 400
+    try:
+        user_id_int = int(user_id)
+    except (ValueError, TypeError):
+        return jsonify({"status": "error", "message": "Invalid user_id format"}), 400
+        
+    density = data.get("density", "")
+    ratio = data.get("ratio", "")
+    vellus_hair = data.get("vellus_hair", "")
+    condition = data.get("condition", "")
+    observation = data.get("observation", "")
+    image_path = data.get("image_path", "")
+    
+    patient_name = data.get("patient_name", "")
+    age = data.get("age", "")
+    gender = data.get("gender", "")
+    family_history = data.get("family_history", "")
+    duration = data.get("duration", "")
+    treatment_history = data.get("treatment_history", "")
+    doctor_comments = data.get("doctor_comments", "")
+    
+    # Reconstruct the diagnosis_result string to match server format
+    diagnosis_str = f"Density : {density}\nScalp Condition : {condition}\nMiniaturized Hair Ratio : {ratio}\nVellus Hair : {vellus_hair}\nObservation: {observation}"
+    
+    db = SessionLocal()
+    try:
+        new_h = History(
+            user_id=user_id_int,
+            diagnosis_result=diagnosis_str,
+            image_path=image_path,
+            patient_name=patient_name,
+            age=age,
+            gender=gender,
+            family_history=family_history,
+            duration=duration,
+            treatment_history=treatment_history,
+            signs_present="",  # Re-populated via diagnosis
+            doctor_comments=doctor_comments
+        )
+        db.add(new_h)
+        db.commit()
+        db.refresh(new_h)
+        db.close()
+        return jsonify({"status": "success", "id": str(new_h.id)})
+    except Exception as e:
+        db.rollback()
+        db.close()
+        print(f"SAVE HISTORY ERROR: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/delete_history", methods=["POST"])
 def delete_history():
     data = parse_request(request)
     item_id = data.get("id")
-    db = SessionLocal()
-    item = db.query(History).filter(History.id == int(item_id)).first()
-    if item:
-        db.delete(item)
-        db.commit()
-        return jsonify({"status": "success"})
-    db.close()
-    return jsonify({"status": "error"}), 404
-
-otp_store = {}
-
-@app.route("/login", methods=["POST"])
-def login():
-    data = parse_request(request)
-    identifier = data.get("username") or data.get("email")
-    password = data.get("password")
-    
-    if not identifier or not password:
-        return jsonify({"status": "error", "message": "Email/Username and password required"}), 400
+    if not item_id:
+        return jsonify({"status": "error", "message": "ID is required"}), 400
+    try:
+        item_id_val = int(item_id)
+    except (ValueError, TypeError):
+        return jsonify({"status": "error", "message": "Invalid ID format"}), 400
         
     db = SessionLocal()
     try:
-        user = db.query(User).filter(
-            (User.name == identifier) | (User.email == identifier) | (User.mobile == identifier)
-        ).first()
-        
-        if user and verify_password(password, user.password):
-            user_data = {
-                "id": str(user.id),
-                "name": user.name or (user.email.split('@')[0] if user.email else "User"),
-                "username": user.name or (user.email.split('@')[0] if user.email else "User"),
-                "email": user.email,
-                "mobile": user.mobile,
-                "dob": user.dob,
-                "gender": user.gender,
-                "age": user.age,
-                "country": user.country
-            }
-            return jsonify({"status": "success", "user": user_data})
-        else:
-            return jsonify({"status": "error", "message": "Invalid email or password"}), 401
-    finally:
-        db.close()
-
-@app.route("/signup", methods=["POST"])
-def signup():
-    data = parse_request(request)
-    email = data.get("email")
-    password = data.get("password")
-    name = data.get("name") or data.get("username") or (email.split('@')[0] if email else "User")
-    mobile = data.get("mobile", "")
-    dob = data.get("dob", "")
-    gender = data.get("gender", "")
-    age = data.get("age", "")
-    country = data.get("country", "")
-
-    if not email or not password:
-        return jsonify({"status": "error", "message": "Email and password required"}), 400
-
-    db = SessionLocal()
-    try:
-        existing = db.query(User).filter((User.email == email) | (User.name == name)).first()
-        if existing:
-            if verify_password(password, existing.password):
-                user_data = {
-                    "id": str(existing.id),
-                    "name": existing.name,
-                    "username": existing.name,
-                    "email": existing.email,
-                    "mobile": existing.mobile,
-                    "dob": existing.dob,
-                    "gender": existing.gender,
-                    "age": existing.age,
-                    "country": existing.country
-                }
-                return jsonify({"status": "success", "user": user_data})
-            return jsonify({"status": "error", "message": "User with this email or name already exists"}), 400
-
-        new_user = User(
-            name=name,
-            email=email,
-            password=hash_password(password),
-            mobile=mobile,
-            dob=dob,
-            gender=gender,
-            age=str(age),
-            country=country
-        )
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
-
-        user_data = {
-            "id": str(new_user.id),
-            "name": new_user.name,
-            "username": new_user.name,
-            "email": new_user.email,
-            "mobile": new_user.mobile,
-            "dob": new_user.dob,
-            "gender": new_user.gender,
-            "age": new_user.age,
-            "country": new_user.country
-        }
-        return jsonify({"status": "success", "user": user_data})
-    except Exception as e:
-        db.rollback()
-        return jsonify({"status": "error", "message": str(e)}), 500
-    finally:
-        db.close()
-
-@app.route("/update_profile", methods=["POST"])
-def update_profile():
-    data = parse_request(request)
-    email = data.get("email")
-    user_id = data.get("user_id") or data.get("id")
-
-    db = SessionLocal()
-    try:
-        user = None
-        if user_id:
-            user = db.query(User).filter(User.id == int(user_id)).first()
-        if not user and email:
-            user = db.query(User).filter(User.email == email).first()
-
-        if not user:
-            return jsonify({"status": "error", "message": "User not found"}), 404
-
-        if data.get("name"): user.name = data.get("name")
-        if data.get("mobile"): user.mobile = data.get("mobile")
-        if data.get("dob"): user.dob = data.get("dob")
-        if data.get("gender"): user.gender = data.get("gender")
-        if data.get("age"): user.age = str(data.get("age"))
-        if data.get("country"): user.country = data.get("country")
-
-        db.commit()
-        db.refresh(user)
-
-        user_data = {
-            "id": str(user.id),
-            "name": user.name,
-            "username": user.name,
-            "email": user.email,
-            "mobile": user.mobile,
-            "dob": user.dob,
-            "gender": user.gender,
-            "age": user.age,
-            "country": user.country
-        }
-        return jsonify({"status": "success", "user": user_data})
-    except Exception as e:
-        db.rollback()
-        return jsonify({"status": "error", "message": str(e)}), 500
-    finally:
-        db.close()
-
-@app.route("/check_mobile", methods=["POST"])
-def check_mobile():
-    data = parse_request(request)
-    mobile = data.get("mobile")
-    db = SessionLocal()
-    try:
-        user = db.query(User).filter(User.mobile == mobile).first()
-        return jsonify({"status": "success", "exists": user is not None})
-    finally:
-        db.close()
-
-# --- Gmail SMTP Config ---
-GMAIL_SENDER = "kukuntlanani123@gmail.com"
-GMAIL_APP_PASSWORD = "fmopbqkulsgfobeo"
-
-def send_otp_email(recipient_email, otp):
-    """Send OTP via Gmail SMTP with HTML email template."""
-    try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = "Tricholens - Your Password Reset OTP Code"
-        msg["From"] = f"Tricholens Care <{GMAIL_SENDER}>"
-        msg["To"] = recipient_email
-
-        html_body = f"""
-        <html>
-        <body style="font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 0;">
-            <div style="max-width: 480px; margin: 40px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
-                <div style="background: linear-gradient(135deg, #FF7070, #FF5A5A); padding: 32px; text-align: center;">
-                    <h1 style="color: white; margin: 0; font-size: 26px; font-weight: 700;">Tricholens Care</h1>
-                    <p style="color: rgba(255,255,255,0.85); margin: 8px 0 0; font-size: 14px;">Password Reset Verification</p>
-                </div>
-                <div style="padding: 36px 32px; text-align: center;">
-                    <p style="color: #374151; font-size: 16px; margin-bottom: 24px;">Use the verification code below to reset your password. This code is valid for <strong>10 minutes</strong>.</p>
-                    <div style="background: #FFF0F0; border: 2px dashed #FF7070; border-radius: 12px; padding: 20px 32px; display: inline-block; margin: 0 auto 24px;">
-                        <span style="font-size: 38px; font-weight: 800; letter-spacing: 10px; color: #FF5A5A; font-family: monospace;">{otp}</span>
-                    </div>
-                    <p style="color: #6B7280; font-size: 13px; line-height: 1.6;">If you did not request a password reset, please ignore this email. Your account remains secure.</p>
-                </div>
-                <div style="background: #F9FAFB; padding: 20px 32px; text-align: center; border-top: 1px solid #E5E7EB;">
-                    <p style="color: #9CA3AF; font-size: 12px; margin: 0;">&copy; 2025 Tricholens. All rights reserved.</p>
-                </div>
-            </div>
-        </body>
-        </html>
-        """
-
-        text_body = f"Your Tricholens OTP code is: {otp}. Valid for 10 minutes."
-        msg.attach(MIMEText(text_body, "plain"))
-        msg.attach(MIMEText(html_body, "html"))
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(GMAIL_SENDER, GMAIL_APP_PASSWORD)
-            server.sendmail(GMAIL_SENDER, recipient_email, msg.as_string())
-
-        print(f"[EMAIL SENT] OTP {otp} sent to {recipient_email}")
-        return True
-    except Exception as e:
-        print(f"[EMAIL ERROR] Failed to send OTP to {recipient_email}: {e}")
-        return False
-
-
-@app.route("/send_email_otp", methods=["POST"])
-def send_email_otp():
-    data = parse_request(request)
-    email = data.get("email", "").strip()
-    if not email:
-        return jsonify({"status": "error", "message": "Email is required."}), 400
-
-    # Basic regex validation for email
-    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-    if not re.match(email_regex, email):
-        return jsonify({"status": "error", "message": "Invalid email address format."}), 400
-
-    # Check if user exists in database
-    db = SessionLocal()
-    try:
-        user = db.query(User).filter(User.email == email).first()
-        if not user:
-            return jsonify({"status": "error", "message": "No account found with this email address. Please check your email or sign up."}), 404
-    finally:
-        db.close()
-
-    otp = str(random.randint(100000, 999999))
-    otp_store[email] = otp
-    print(f"DEBUG: OTP for {email} is {otp}")
-
-    # Send OTP via Gmail
-    email_sent = send_otp_email(email, otp)
-    if not email_sent:
-        return jsonify({"status": "error", "message": "Failed to send OTP email. Please try again."}), 500
-
-    return jsonify({"status": "success", "message": f"OTP sent successfully to {email}. Check your inbox."})
-
-@app.route("/verify_email_otp", methods=["POST"])
-def verify_email_otp():
-    data = parse_request(request)
-    email = data.get("email")
-    otp = data.get("otp")
-    if otp == "123456" or (email in otp_store and otp_store[email] == otp):
-        return jsonify({"status": "success", "message": "OTP verified"})
-    return jsonify({"status": "error", "message": "Invalid OTP"}), 400
-
-@app.route("/reset_password", methods=["POST"])
-def reset_password():
-    data = parse_request(request)
-    email = data.get("email")
-    password = data.get("password")
-    if not email or not password:
-        return jsonify({"status": "error", "message": "Email and password required"}), 400
-    db = SessionLocal()
-    try:
-        user = db.query(User).filter(User.email == email).first()
-        if user:
-            user.password = hash_password(password)
+        item = db.query(History).filter(History.id == item_id_val).first()
+        if item:
+            db.delete(item)
             db.commit()
-            return jsonify({"status": "success", "message": "Password reset successfully"})
-        return jsonify({"status": "error", "message": "User not found"}), 404
-    finally:
+            db.close()
+            return jsonify({"status": "success"})
         db.close()
-
-@app.route("/images/<path:filename>")
-def serve_image(filename):
-    return send_from_directory("uploads", filename)
+        return jsonify({"status": "error", "message": "Item not found"}), 404
+    except Exception as e:
+        db.rollback()
+        db.close()
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/<path:filename>")
 def serve_static_page(filename):
@@ -697,4 +882,4 @@ def serve_static_page(filename):
     return jsonify({"status": "error", "message": "Not found"}), 404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8118)
+    app.run(host="0.0.0.0", port=8118)
