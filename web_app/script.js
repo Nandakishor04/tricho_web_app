@@ -49,61 +49,33 @@ class StorageManager {
         let localHistory = this.getHistory();
 
         items.forEach(item => {
-            // Clean up image URL
-            let rawUrl = item.image_url || item.image_path || item.imageUri;
-            if (rawUrl) {
-                if (rawUrl.startsWith('data:') || rawUrl.startsWith('http')) {
-                    item.image_url = rawUrl;
-                } else {
-                    let filename = rawUrl.split(/[/\\]/).pop();
-                    item.image_url = API_BASE_URL + 'images/' + filename;
-                }
+            // Normalize for result.html compatibility
+            if (!item.patient && item.patient_name) {
+                item.patient = {
+                    name: item.patient_name,
+                    age: item.age,
+                    gender: item.gender,
+                    family_history: item.family_history,
+                    duration: item.duration,
+                    treatment: item.treatment_history,
+                    doctor_comments: item.doctor_comments
+                };
             }
-
-            // Normalize patient object for result.html compatibility
-            item.patient = {
-                name: item.patient?.name || item.patient_name || item.patientName || "N/A",
-                age: item.patient?.age || item.age || item.patientAge || "N/A",
-                gender: item.patient?.gender || item.gender || item.patientGender || "N/A",
-                family_history: item.patient?.family_history || item.family_history || item.patientFamilyHistory || "N/A",
-                duration: item.patient?.duration || item.duration || item.patientDuration || "N/A",
-                treatment: item.patient?.treatment || item.patient?.treatment_history || item.treatment_history || item.patientTreatmentHistory || "N/A",
-                doctor_comments: item.patient?.doctor_comments || item.patient?.comments || item.doctor_comments || item.doctorComments || "N/A"
-            };
             if (!item.vellus && item.vellus_hair) item.vellus = item.vellus_hair;
+
+            // Normalize image URL
+            if (item.image_url && !item.image_url.startsWith('http')) {
+                let filename = item.image_url;
+                if (filename.startsWith('uploads/')) filename = filename.replace('uploads/', '');
+                if (filename.startsWith('/')) filename = filename.substring(1);
+                item.image_url = API_BASE_URL + 'images/' + filename;
+            }
         });
 
         const combined = [...items];
 
-        localHistory.forEach(localItem => {
-            const alreadyExists = items.some(serverItem =>
-                (serverItem.id && localItem.id && String(serverItem.id) === String(localItem.id)) ||
-                (serverItem.date && localItem.date && serverItem.date === localItem.date) ||
-                (serverItem.diagnosis_date && localItem.date && serverItem.diagnosis_date === localItem.date)
-            );
-            if (!alreadyExists) {
-                let rawUrl = localItem.image_url || localItem.image_path || localItem.imageUri || localItem.preview_image;
-                if (rawUrl && !rawUrl.startsWith('data:') && !rawUrl.startsWith('http')) {
-                    let filename = rawUrl.split(/[/\\]/).pop();
-                    localItem.image_url = API_BASE_URL + 'images/' + filename;
-                }
-                if (!localItem.patient) {
-                    localItem.patient = {
-                        name: localItem.patient_name || localItem.patientName || "N/A",
-                        age: localItem.age || localItem.patientAge || "N/A",
-                        gender: localItem.gender || localItem.patientGender || "N/A",
-                        family_history: localItem.family_history || localItem.patientFamilyHistory || "N/A",
-                        duration: localItem.duration || localItem.patientDuration || "N/A",
-                        treatment: localItem.treatment_history || localItem.treatment || "N/A",
-                        doctor_comments: localItem.doctor_comments || localItem.comments || "N/A"
-                    };
-                }
-                combined.push(localItem);
-            }
-        });
-
         // Sort by date descending
-        combined.sort((a, b) => new Date(b.date || b.diagnosis_date || 0) - new Date(a.date || a.diagnosis_date || 0));
+        combined.sort((a, b) => new Date(b.date || b.diagnosis_date) - new Date(a.date || a.diagnosis_date));
 
         localStorage.setItem('history', JSON.stringify(combined));
     }
@@ -156,6 +128,10 @@ class NetworkManager {
         return await this.postForm('update_profile', data);
     }
 
+    static async getProfile(params) {
+        return await this.postForm('get_profile', params);
+    }
+
     static async deleteHistory(id) {
         const url = `${API_BASE_URL}delete_history`;
         const response = await fetch(url, {
@@ -189,12 +165,29 @@ function checkAuth() {
 
     console.log("Current path:", path, "Page:", currentPage);
 
-    const publicPages = ['login.html', 'signup.html', 'forgot_password.html', 'index.html'];
+    const publicPages = ['login.html', 'signup.html', 'forgot_password.html', 'index.html', 'about.html', 'privacy.html', 'tips.html', 'haircare.html'];
 
     if (!user && !publicPages.includes(currentPage)) {
         console.log("Redirecting to login...");
         navigate('login.html');
     }
+    
+    // Automatically fetch fresh profile in the background
+    if (user) {
+        const queryParams = {};
+        if (user.id) queryParams.user_id = user.id;
+        if (user.email) queryParams.email = user.email;
+        if (user.name) queryParams.username = user.name;
+
+        NetworkManager.getProfile(queryParams).then(res => {
+            if (res.status === 'success' && res.user) {
+                StorageManager.saveUser(res.user);
+                // Optionally dispatch an event so UI can update immediately if currently looking at it
+                window.dispatchEvent(new Event('profileUpdated'));
+            }
+        }).catch(err => console.error("Failed to fetch fresh profile:", err));
+    }
+    
     return user;
 }
 
@@ -298,14 +291,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (currentPage === 'diagnosis.html') {
+        const user = checkAuth();
+        let selectedSampleBlob = null;
+
+        window.loadSampleImage = async () => {
+            try {
+                const response = await fetch('sample_scalp.jpg');
+                const blob = await response.blob();
+                selectedSampleBlob = blob;
+                
+                const preview = document.getElementById('image-preview');
+                const placeholder = document.getElementById('upload-placeholder');
+                const warning = document.getElementById('invalid-warning');
+                
+                preview.src = 'sample_scalp.jpg';
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+                if (warning) warning.style.display = 'none';
+                
+                // Clear manual file input
+                document.getElementById('image-input').value = "";
+                // Save preview
+                localStorage.setItem('temp_preview', 'sample_scalp.jpg');
+            } catch (err) {
+                console.error("Failed to load sample image:", err);
+            }
+        };
+
         const imageInput = document.getElementById('image-input');
         const preview = document.getElementById('image-preview');
         const placeholder = document.getElementById('upload-placeholder');
         const diagnoseBtn = document.getElementById('diagnose-btn');
 
-        if (imageInput) {
+        if (imageInput && preview && placeholder) {
             imageInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
+                selectedSampleBlob = null; // Clear sample selection
+                const warning = document.getElementById('invalid-warning');
+                if (warning) warning.style.display = 'none';
+
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
@@ -323,15 +347,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const diagnosisForm = document.getElementById('diagnosis-form');
         if (diagnosisForm) {
+            // Remove the strict 'required' attribute since we can now use sample image
+            imageInput.required = false;
+
             diagnosisForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const user = StorageManager.getUser();
                 if (!user) return;
 
                 const imageFile = document.getElementById('image-input').files[0];
+                if (!imageFile && !selectedSampleBlob) {
+                    alert("Please select a scalp image or use the sample image.");
+                    return;
+                }
 
                 const formData = new FormData();
-                formData.append('image', imageFile);
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                } else if (selectedSampleBlob) {
+                    formData.append('image', selectedSampleBlob, 'sample_scalp.jpg');
+                }
+
                 formData.append('patient_name', document.getElementById('patient-name').value);
                 formData.append('age', document.getElementById('age').value);
                 formData.append('gender', document.getElementById('gender').value);
@@ -342,11 +378,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('user_id', user.id);
 
                 setLoader(true);
+                const warning = document.getElementById('invalid-warning');
+                if (warning) warning.style.display = 'none';
+
                 // Artificial delay to match Swift code's 3-second rule
                 const startTime = Date.now();
 
+                // Timeout promise for 10 seconds
+                const timeoutPromise = new Promise((_, reject) => {
+                    setTimeout(() => reject(new Error('Timeout')), 10000);
+                });
+
                 try {
-                    const res = await NetworkManager.diagnose(formData);
+                    const res = await Promise.race([
+                        NetworkManager.diagnose(formData),
+                        timeoutPromise
+                    ]);
+                    
                     const elapsed = Date.now() - startTime;
                     const remaining = Math.max(0, 3000 - elapsed);
 
@@ -387,13 +435,27 @@ document.addEventListener('DOMContentLoaded', () => {
                             StorageManager.saveHistory(result);
                             navigate('result.html');
                         } else {
-                            alert(res.message || "Diagnosis failed");
+                            if (warning && (res.message || "").toLowerCase().includes("invalid image")) {
+                                warning.style.display = 'block';
+                                warning.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                alert(res.message || "Diagnosis failed");
+                            }
                         }
                         setLoader(false);
                     }, remaining);
                 } catch (err) {
                     console.error("Diagnosis Error:", err);
-                    alert("Diagnosis failed: " + err.message + "\nPlease check your connection or try again later.");
+                    if (err.message === 'Timeout') {
+                        if (warning) {
+                            warning.style.display = 'block';
+                            warning.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            alert("Invalid image. Please upload a clear scalp image.");
+                        }
+                    } else {
+                        alert("Diagnosis failed: " + err.message + "\nPlease check your connection or try again later.");
+                    }
                     setLoader(false);
                 }
             });
@@ -418,29 +480,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     container.innerHTML = `<p style="text-align:center; margin-top:20px; color:gray;">${filter ? 'No results found' : 'No history found'}</p>`;
                 } else {
                     container.innerHTML = filtered.map((item, index) => {
-                        const displayDate = new Date(item.date || item.diagnosis_date || Date.now()).toLocaleString('en-US', {
-                            day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                        });
-                        const name = item.patient?.name || item.patient_name || item.patientName || 'Patient';
-                        let rawImg = item.image_url || item.image_path || item.imageUri;
-                        let imgSrc = 'logo.png';
-                        if (rawImg) {
-                            if (rawImg.startsWith('data:') || rawImg.startsWith('http')) {
-                                imgSrc = rawImg;
-                            } else {
-                                let filename = rawImg.split(/[/\\]/).pop();
-                                imgSrc = API_BASE_URL + 'images/' + filename;
-                            }
-                        }
-
                         return `
                             <div class="history-item" onclick="viewDiagnosisDetail(${index})" style="cursor:pointer; display: flex; align-items: center; justify-content: space-between;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <img src="${imgSrc}" class="history-item-img" style="width:60px; height:60px; object-fit:cover; border-radius:8px;" onerror="this.onerror=null; this.src='logo.png';">
+                                <div style="display: flex; align-items: center;">
+                                    <img src="${item.image_url ? (item.image_url.startsWith('http') ? item.image_url : API_BASE_URL + 'images/' + (item.image_url.startsWith('uploads/') ? item.image_url.replace('uploads/', '') : (item.image_url.startsWith('/') ? item.image_url.substring(1) : item.image_url))) : 'https://via.placeholder.com/60'}" class="history-item-img" onerror="this.src='https://via.placeholder.com/60'">
                                     <div class="history-item-info">
-                                        <h4 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 700;">${name}</h4>
-                                        <p style="margin: 0 0 4px 0; font-size: 14px; color: var(--brand-pink); font-weight: 600;">${item.condition || 'Scalp Analysis'}</p>
-                                        <span style="font-size: 12px; color: #888;">${displayDate}</span>
+                                        <h4>${item.condition || 'Scalp Condition'}</h4>
                                     </div>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 15px;">
@@ -458,38 +503,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderHistory();
 
-        // Sync history from server on page load
+        // Refresh latest history automatically
+        const user = StorageManager.getUser();
         if (user) {
             NetworkManager.getHistory(user.id).then(res => {
                 if (res.status === 'success') {
                     StorageManager.syncHistory(res.history);
-                    renderHistory(searchInput ? searchInput.value : '');
+                    renderHistory(); // Re-render with new data
                 }
-            });
+            }).catch(err => console.error("Failed to refresh history", err));
         }
 
+        // Search functionality
         if (searchInput) {
-            searchInput.addEventListener('input', (e) => renderHistory(e.target.value));
+            searchInput.addEventListener('input', (e) => {
+                renderHistory(e.target.value);
+            });
         }
     }
 
     if (currentPage === 'profile.html') {
-        const user = StorageManager.getUser();
-        if (user) {
-            document.getElementById('profile-name').innerText = user.name || "User";
-            document.getElementById('profile-email').innerText = user.email || user.username || user.id || "Not logged in";
-            document.getElementById('val-mobile').innerText = user.mobile || user.phone || "Not provided";
-            document.getElementById('val-dob').innerText = user.dob || "Not provided";
-            document.getElementById('val-age').innerText = user.age || "Not provided";
-            document.getElementById('val-gender').innerText = user.gender || "Not provided";
-            document.getElementById('val-country').innerText = user.country || "Not provided";
-            
-            const statAge = document.getElementById('stat-age');
-            if (statAge) statAge.innerText = user.age || "--";
-            
-            const statGender = document.getElementById('stat-gender-icon');
-            if (statGender) statGender.innerText = user.gender ? user.gender.charAt(0).toUpperCase() : "--";
-        }
+        const renderProfile = () => {
+            const user = StorageManager.getUser();
+            if (user) {
+                document.getElementById('profile-name').innerText = user.name || "User";
+                document.getElementById('profile-email').innerText = user.email || user.username || user.id || "Not logged in";
+                document.getElementById('val-mobile').innerText = user.mobile || user.phone || "Not provided";
+                document.getElementById('val-dob').innerText = user.dob || "Not provided";
+                document.getElementById('val-age').innerText = user.age || "Not provided";
+                document.getElementById('val-gender').innerText = user.gender || "Not provided";
+                document.getElementById('val-country').innerText = user.country || "Not provided";
+            }
+        };
+        
+        renderProfile();
+        
+        // Listen for the background sync event
+        window.addEventListener('profileUpdated', renderProfile);
 
         document.getElementById('signout-btn').onclick = () => {
             StorageManager.clearUser();
@@ -549,354 +599,81 @@ document.addEventListener('DOMContentLoaded', () => {
         const step3 = document.getElementById('step-3');
         const loaderText = document.getElementById('loader-text');
 
-        const forgotAlert = document.getElementById('forgot-alert');
-        const forgotAlertText = document.getElementById('forgot-alert-text');
-
-        const emailInput = document.getElementById('forgot-email');
-        const emailContainer = document.getElementById('email-input-container');
-        const emailValidIcon = document.getElementById('email-valid-icon');
-        const emailInvalidIcon = document.getElementById('email-invalid-icon');
-        const emailFeedback = document.getElementById('email-feedback');
-
-        const otpBoxes = document.querySelectorAll('.otp-single-box');
-        const resendBtn = document.getElementById('resend-otp-btn');
-        const resendTimerEl = document.getElementById('resend-timer');
-
-        const newPassInput = document.getElementById('new-password');
-        const confirmPassInput = document.getElementById('confirm-password');
-        const passMatchFeedback = document.getElementById('password-match-feedback');
-        const strengthFill = document.getElementById('strength-fill');
-        const strengthText = document.getElementById('strength-text');
-
         let resetEmail = "";
-        let resendTimerInterval = null;
 
-        // Show/Hide Alert Banner
-        window.showAlert = function(msg, isError = true) {
-            if (!forgotAlert) return;
-            forgotAlert.className = `alert-banner ${isError ? 'error' : 'success'}`;
-            forgotAlertText.innerText = msg;
-            forgotAlert.style.display = 'flex';
-        };
-
-        window.hideAlert = function() {
-            if (forgotAlert) forgotAlert.style.display = 'none';
-        };
-
-        // Stepper Navigation Helper
-        window.goToStep = function(stepNum) {
-            hideAlert();
-            step1.style.display = stepNum === 1 ? 'block' : 'none';
-            step2.style.display = stepNum === 2 ? 'block' : 'none';
-            step3.style.display = stepNum === 3 ? 'block' : 'none';
-
-            // Update Stepper Nodes
-            for (let i = 1; i <= 3; i++) {
-                const node = document.getElementById(`step-node-${i}`);
-                if (!node) continue;
-                node.classList.remove('active', 'completed');
-                if (i < stepNum) {
-                    node.classList.add('completed');
-                } else if (i === stepNum) {
-                    node.classList.add('active');
-                }
-            }
-
-            const fill = document.getElementById('stepper-fill');
-            if (fill) {
-                if (stepNum === 1) fill.style.width = '0%';
-                if (stepNum === 2) fill.style.width = '50%';
-                if (stepNum === 3) fill.style.width = '100%';
-            }
-
-            // Subtitles update
-            const flowTitle = document.getElementById('flow-title');
-            const flowSubtitle = document.getElementById('flow-subtitle');
-            if (stepNum === 1) {
-                if (flowTitle) flowTitle.innerText = "Forgot Password?";
-                if (flowSubtitle) flowSubtitle.innerText = "Don't worry! Enter your registered email address below to reset your password.";
-            } else if (stepNum === 2) {
-                if (flowTitle) flowTitle.innerText = "Verify OTP Code";
-                if (flowSubtitle) flowSubtitle.innerText = "We sent a 6-digit verification code to your email.";
-                startResendTimer();
-            } else if (stepNum === 3) {
-                if (flowTitle) flowTitle.innerText = "Create New Password";
-                if (flowSubtitle) flowSubtitle.innerText = "Please choose a strong new password for your Tricholens account.";
-            }
-        };
-
-        // Client-side Email Validation
-        function validateEmailFormat(emailStr) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(emailStr);
-        }
-
-        if (emailInput) {
-            const checkEmailValidity = () => {
-                const val = emailInput.value.trim();
-                hideAlert();
-                if (!val) {
-                    emailContainer.classList.remove('valid-state', 'error-state');
-                    emailValidIcon.style.display = 'none';
-                    emailInvalidIcon.style.display = 'none';
-                    emailFeedback.style.display = 'none';
-                    return false;
-                }
-
-                if (validateEmailFormat(val)) {
-                    emailContainer.classList.remove('error-state');
-                    emailContainer.classList.add('valid-state');
-                    emailValidIcon.style.display = 'block';
-                    emailInvalidIcon.style.display = 'none';
-                    emailFeedback.className = 'input-feedback valid';
-                    emailFeedback.innerHTML = '<i class="fas fa-check-circle"></i> Valid email format';
-                    emailFeedback.style.display = 'flex';
-                    return true;
-                } else {
-                    emailContainer.classList.remove('valid-state');
-                    emailContainer.classList.add('error-state');
-                    emailValidIcon.style.display = 'none';
-                    emailInvalidIcon.style.display = 'block';
-                    emailFeedback.className = 'input-feedback invalid';
-                    emailFeedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid email format (e.g., user@domain.com)';
-                    emailFeedback.style.display = 'flex';
-                    return false;
-                }
-            };
-
-            emailInput.addEventListener('input', checkEmailValidity);
-            emailInput.addEventListener('blur', checkEmailValidity);
-        }
-
-        // OTP Boxes Auto-Focus Logic
-        if (otpBoxes && otpBoxes.length > 0) {
-            otpBoxes.forEach((box, idx) => {
-                box.addEventListener('input', (e) => {
-                    const val = e.target.value;
-                    if (val && idx < otpBoxes.length - 1) {
-                        otpBoxes[idx + 1].focus();
-                    }
-                    collectOTP();
-                });
-                box.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && !box.value && idx > 0) {
-                        otpBoxes[idx - 1].focus();
-                    }
-                });
-                box.addEventListener('paste', (e) => {
-                    e.preventDefault();
-                    const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
-                    if (/^\d{6}$/.test(pasteData)) {
-                        pasteData.split('').forEach((char, i) => {
-                            if (otpBoxes[i]) otpBoxes[i].value = char;
-                        });
-                        collectOTP();
-                        if (otpBoxes[5]) otpBoxes[5].focus();
-                    }
-                });
-            });
-        }
-
-        function collectOTP() {
-            let fullOtp = "";
-            otpBoxes.forEach(b => fullOtp += b.value);
-            const hiddenOtp = document.getElementById('forgot-otp');
-            if (hiddenOtp) hiddenOtp.value = fullOtp;
-            return fullOtp;
-        }
-
-        // Resend OTP Timer
-        function startResendTimer() {
-            if (resendTimerInterval) clearInterval(resendTimerInterval);
-            let seconds = 60;
-            if (resendBtn) {
-                resendBtn.disabled = true;
-                resendBtn.style.cursor = 'not-allowed';
-                resendBtn.style.color = '#9CA3AF';
-            }
-
-            resendTimerInterval = setInterval(() => {
-                seconds--;
-                if (resendTimerEl) resendTimerEl.innerText = seconds;
-                if (seconds <= 0) {
-                    clearInterval(resendTimerInterval);
-                    if (resendBtn) {
-                        resendBtn.disabled = false;
-                        resendBtn.style.cursor = 'pointer';
-                        resendBtn.style.color = 'var(--brand-pink)';
-                        resendBtn.innerText = "Resend OTP";
-                    }
-                }
-            }, 1000);
-        }
-
-        if (resendBtn) {
-            resendBtn.addEventListener('click', async () => {
-                if (resendBtn.disabled) return;
-                setLoader(true);
-                try {
-                    const res = await NetworkManager.sendOTP(resetEmail);
-                    if (res.status === 'success') {
-                        showAlert("A new OTP code has been sent to your email.", false);
-                        startResendTimer();
-                    } else {
-                        showAlert(res.message || "Failed to resend OTP.", true);
-                    }
-                } catch (err) {
-                    showAlert("Connection error: " + err.message, true);
-                } finally {
-                    setLoader(false);
-                }
-            });
-        }
-
-        // Password Strength & Match Listener
-        if (newPassInput) {
-            newPassInput.addEventListener('input', () => {
-                const pass = newPassInput.value;
-                let score = 0;
-                if (pass.length >= 6) score += 33;
-                if (pass.length >= 8) score += 33;
-                if (/[0-9]/.test(pass) && /[^A-Za-z0-9]/.test(pass)) score += 34;
-
-                if (strengthFill) {
-                    strengthFill.style.width = `${score}%`;
-                    if (score <= 33) {
-                        strengthFill.style.backgroundColor = '#DC2626';
-                        if (strengthText) strengthText.innerText = "Weak Password";
-                    } else if (score <= 66) {
-                        strengthFill.style.backgroundColor = '#F59E0B';
-                        if (strengthText) strengthText.innerText = "Medium Strength";
-                    } else {
-                        strengthFill.style.backgroundColor = '#10B981';
-                        if (strengthText) strengthText.innerText = "Strong Password";
-                    }
-                }
-                checkPasswordMatch();
-            });
-        }
-
-        if (confirmPassInput) {
-            confirmPassInput.addEventListener('input', checkPasswordMatch);
-        }
-
-        function checkPasswordMatch() {
-            if (!confirmPassInput || !newPassInput) return false;
-            const pass = newPassInput.value;
-            const confirmVal = confirmPassInput.value;
-
-            if (!confirmVal) {
-                passMatchFeedback.style.display = 'none';
-                return false;
-            }
-
-            if (pass === confirmVal) {
-                passMatchFeedback.className = 'input-feedback valid';
-                passMatchFeedback.innerHTML = '<i class="fas fa-check-circle"></i> Passwords match!';
-                passMatchFeedback.style.display = 'flex';
-                return true;
-            } else {
-                passMatchFeedback.className = 'input-feedback invalid';
-                passMatchFeedback.innerHTML = '<i class="fas fa-times-circle"></i> Passwords do not match';
-                passMatchFeedback.style.display = 'flex';
-                return false;
-            }
-        }
-
-        // Step 1 Form Submit (Send OTP)
+        // Step 1: Send OTP
         document.getElementById('forgot-email-form').onsubmit = async (e) => {
             e.preventDefault();
-            resetEmail = emailInput.value.trim();
-
-            if (!validateEmailFormat(resetEmail)) {
-                showAlert("Please enter a valid email address format (e.g. name@domain.com).", true);
-                return;
-            }
-
+            resetEmail = document.getElementById('forgot-email').value;
             setLoader(true);
-            hideAlert();
-            if (loaderText) loaderText.innerText = "Verifying email & sending OTP...";
-
+            if (loaderText) loaderText.innerText = "Sending OTP...";
             try {
                 const res = await NetworkManager.sendOTP(resetEmail);
                 if (res.status === 'success') {
-                    const sentDisplay = document.getElementById('sent-email-display');
-                    if (sentDisplay) sentDisplay.innerText = resetEmail;
-                    goToStep(2);
+                    if (res.message && res.message.includes('1234')) {
+                        alert(res.message);
+                    }
+                    step1.style.display = 'none';
+                    step2.style.display = 'block';
                 } else {
-                    showAlert(res.message || "Email lookup failed.", true);
+                    alert(res.message || "Failed to send OTP");
                 }
             } catch (err) {
-                showAlert("Connection error: " + err.message, true);
+                alert("Connection error: " + err.message);
             } finally {
                 setLoader(false);
             }
         };
 
-        // Step 2 Form Submit (Verify OTP)
+        // Step 2: Verify OTP
         document.getElementById('forgot-otp-form').onsubmit = async (e) => {
             e.preventDefault();
-            const otp = collectOTP();
-
-            if (otp.length < 6) {
-                showAlert("Please enter the complete 6-digit OTP code.", true);
-                return;
-            }
-
+            const otp = document.getElementById('forgot-otp').value;
             setLoader(true);
-            hideAlert();
-            if (loaderText) loaderText.innerText = "Verifying OTP code...";
-
+            if (loaderText) loaderText.innerText = "Verifying OTP...";
             try {
                 const res = await NetworkManager.verifyOTP(resetEmail, otp);
                 if (res.status === 'success') {
-                    goToStep(3);
+                    step2.style.display = 'none';
+                    step3.style.display = 'block';
                 } else {
-                    showAlert(res.message || "Invalid OTP code. Please check and try again.", true);
+                    alert(res.message || "Invalid OTP");
                 }
             } catch (err) {
-                showAlert("Connection error: " + err.message, true);
+                alert("Connection error: " + err.message);
             } finally {
                 setLoader(false);
             }
         };
 
-        // Step 3 Form Submit (Reset Password)
+        // Step 3: Reset Password
         document.getElementById('forgot-reset-form').onsubmit = async (e) => {
             e.preventDefault();
-            const pass = newPassInput.value;
-            const confirmPass = confirmPassInput.value;
-
-            if (pass.length < 6) {
-                showAlert("Password must be at least 6 characters long.", true);
-                return;
-            }
+            const pass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
 
             if (pass !== confirmPass) {
-                showAlert("Passwords do not match. Please ensure both fields are identical.", true);
+                alert("Passwords do not match!");
                 return;
             }
 
             setLoader(true);
-            hideAlert();
-            if (loaderText) loaderText.innerText = "Updating password...";
-
+            if (loaderText) loaderText.innerText = "Resetting Password...";
             try {
                 const res = await NetworkManager.resetPassword(resetEmail, pass);
                 if (res.status === 'success') {
-                    const modal = document.getElementById('success-modal');
-                    if (modal) modal.style.display = 'flex';
+                    alert("Password reset successfully! Please login with your new password.");
+                    navigate('login.html');
                 } else {
-                    showAlert(res.message || "Failed to reset password.", true);
+                    alert(res.message || "Failed to reset password");
                 }
             } catch (err) {
-                showAlert("Connection error: " + err.message, true);
+                alert("Connection error: " + err.message);
             } finally {
                 setLoader(false);
             }
         };
     }
-
 });
 
 function calculateAge(dobString) {
@@ -911,26 +688,6 @@ function viewDiagnosisDetail(index) {
     const history = StorageManager.getHistory();
     const item = history[index];
     if (!item) return;
-
-    // Ensure image_url is properly formatted
-    let rawImg = item.image_url || item.image_path || item.imageUri || item.preview_image;
-    if (rawImg && !rawImg.startsWith('data:') && !rawImg.startsWith('http')) {
-        let filename = rawImg.split(/[/\\]/).pop();
-        item.image_url = API_BASE_URL + 'images/' + filename;
-    }
-
-    // Ensure patient details exist
-    if (!item.patient) {
-        item.patient = {
-            name: item.patient_name || item.patientName || "N/A",
-            age: item.age || item.patientAge || "N/A",
-            gender: item.gender || item.patientGender || "N/A",
-            family_history: item.family_history || item.patientFamilyHistory || "N/A",
-            duration: item.duration || item.patientDuration || "N/A",
-            treatment: item.treatment_history || item.treatment || "N/A",
-            doctor_comments: item.doctor_comments || item.comments || "N/A"
-        };
-    }
 
     localStorage.setItem('last_diagnosis', JSON.stringify(item));
     navigate('result.html');
@@ -965,23 +722,3 @@ async function deleteHistoryItemManual(id, date, index) {
         }
     }
 }
-
-function togglePasswordVisibility(inputId, btn) {
-    const input = document.getElementById(inputId);
-    if (!input) return;
-    const icon = btn.querySelector('i');
-    if (input.type === 'password') {
-        input.type = 'text';
-        if (icon) {
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        }
-    } else {
-        input.type = 'password';
-        if (icon) {
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    }
-}
-
