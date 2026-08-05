@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.service import Service
 
 BASE_URL = "http://localhost:8118"
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def driver():
     options = Options()
     options.add_argument("--headless")
@@ -23,6 +23,7 @@ def driver():
     options.add_argument("--disable-web-security")
     drv = webdriver.Chrome(options=options)
     drv.implicitly_wait(5)
+    drv.set_page_load_timeout(15)
     yield drv
     drv.quit()
 
