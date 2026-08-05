@@ -38,7 +38,7 @@ class TestLoginPage:
     def test_TC_SE_001_login_page_loads(self, driver):
         """Login page returns 200 and title contains Tricholens"""
         self._load(driver)
-        assert "Tricholens" in driver.title or driver.find_element(By.TAG_NAME, "body")
+        assert "Tricholens" in driver.title or WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
     def test_TC_SE_002_email_field_present(self, driver):
         self._load(driver)
@@ -104,7 +104,7 @@ class TestLoginPage:
     def test_TC_SE_020_page_responsive_mobile_size(self, driver):
         driver.set_window_size(375, 812)
         self._load(driver)
-        body = driver.find_element(By.TAG_NAME, "body")
+        body = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
         assert body.is_displayed()
         driver.set_window_size(1920, 1080)
 
@@ -123,7 +123,7 @@ class TestLoginPage:
 
     def test_TC_SE_023_page_has_logo_or_brand(self, driver):
         self._load(driver)
-        body_text = driver.find_element(By.TAG_NAME, "body").text
+        body_text = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text
         assert "Tricholens" in body_text or driver.find_elements(By.TAG_NAME, "img")
 
     def test_TC_SE_024_page_meta_viewport_exists(self, driver):
@@ -157,7 +157,7 @@ class TestLoginPage:
     def test_TC_SE_031_to_035_page_at_resolutions(self, driver, resolution):
         driver.set_window_size(*resolution)
         self._load(driver)
-        assert driver.find_element(By.TAG_NAME, "body").is_displayed()
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).is_displayed()
         driver.set_window_size(1920, 1080)
 
     def test_TC_SE_036_css_stylesheet_loads(self, driver):
@@ -206,7 +206,7 @@ class TestSignupPage:
 
     def test_TC_SE_051_signup_page_loads(self, driver):
         self._load(driver)
-        assert driver.find_element(By.TAG_NAME, "body")
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
     def test_TC_SE_052_name_field_present(self, driver):
         self._load(driver)
@@ -306,7 +306,7 @@ class TestSignupPage:
     def test_TC_SE_081_to_085_responsive_layout(self, driver, resolution):
         driver.set_window_size(*resolution)
         self._load(driver)
-        assert driver.find_element(By.TAG_NAME, "body").is_displayed()
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).is_displayed()
         driver.set_window_size(1920, 1080)
 
     @pytest.mark.parametrize("payload", ["<img src=x onerror=alert(1)>", "javascript:alert(1)", "' UNION SELECT *--"])
@@ -384,19 +384,19 @@ class TestNavigation:
 
     def test_TC_SE_132_about_page_has_content(self, driver):
         driver.get(f"{BASE_URL}/about.html")
-        assert len(driver.find_element(By.TAG_NAME, "body").text) > 10
+        assert len(WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text) > 10
 
     def test_TC_SE_133_privacy_page_has_content(self, driver):
         driver.get(f"{BASE_URL}/privacy.html")
-        assert len(driver.find_element(By.TAG_NAME, "body").text) > 10
+        assert len(WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text) > 10
 
     def test_TC_SE_134_tips_page_has_content(self, driver):
         driver.get(f"{BASE_URL}/tips.html")
-        assert len(driver.find_element(By.TAG_NAME, "body").text) > 10
+        assert len(WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text) > 10
 
     def test_TC_SE_135_haircare_page_has_content(self, driver):
         driver.get(f"{BASE_URL}/haircare.html")
-        assert len(driver.find_element(By.TAG_NAME, "body").text) > 10
+        assert len(WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text) > 10
 
     @pytest.mark.parametrize("page", [
         "login.html", "signup.html", "forgot_password.html",
@@ -429,7 +429,7 @@ class TestForgotPasswordPage:
 
     def test_TC_SE_151_page_loads(self, driver):
         self._load(driver)
-        assert driver.find_element(By.TAG_NAME, "body")
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
     def test_TC_SE_152_has_email_input(self, driver):
         self._load(driver)
@@ -498,7 +498,7 @@ class TestForgotPasswordPage:
     def test_TC_SE_179_to_183_responsive_at_resolutions(self, driver, resolution):
         driver.set_window_size(*resolution)
         self._load(driver)
-        assert driver.find_element(By.TAG_NAME, "body").is_displayed()
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body"))).is_displayed()
         driver.set_window_size(1920, 1080)
 
     def test_TC_SE_184_email_clears_properly(self, driver):
@@ -637,7 +637,7 @@ class TestProtectedPages:
     ])
     def test_TC_SE_229_to_241_all_pages_have_body(self, driver, page):
         driver.get(f"{BASE_URL}/{page}")
-        assert driver.find_element(By.TAG_NAME, "body")
+        assert WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
     @pytest.mark.parametrize("page", [
         "dashboard.html", "profile.html", "history.html",
