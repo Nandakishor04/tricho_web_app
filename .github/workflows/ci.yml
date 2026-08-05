@@ -52,6 +52,7 @@ jobs:
 
       - name: 🧪 Run Selenium Tests (300 test cases)
         run: |
+          mkdir -p reports
           python -m pytest tests/test_selenium.py \
             --tb=short \
             --junit-xml=reports/selenium_results.xml \
@@ -124,6 +125,7 @@ jobs:
 
       - name: ⚡ Run Load Tests (300 test cases)
         run: |
+          mkdir -p reports
           python -m pytest tests/test_load.py \
             --tb=short \
             --junit-xml=reports/load_results.xml \
@@ -196,6 +198,7 @@ jobs:
 
       - name: 📱 Run Appium Mobile API Tests (300 test cases)
         run: |
+          mkdir -p reports
           python -m pytest tests/test_appium.py \
             --tb=short \
             --junit-xml=reports/appium_results.xml \
@@ -272,6 +275,7 @@ jobs:
 
       - name: 🔍 Run Bandit Static Analysis (pre-test)
         run: |
+          mkdir -p reports
           python -m bandit -r backend_complete/single_server.py -f txt -o reports/bandit_report.txt || true
           cat reports/bandit_report.txt >> $GITHUB_STEP_SUMMARY || true
         continue-on-error: true
@@ -285,6 +289,7 @@ jobs:
 
       - name: 🔐 Run Vulnerability Tests (300 test cases)
         run: |
+          mkdir -p reports
           python -m pytest tests/test_vulnerability.py \
             --tb=short \
             --junit-xml=reports/vulnerability_results.xml \
